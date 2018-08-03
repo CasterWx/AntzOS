@@ -192,8 +192,7 @@ void putfonts8_asc(char *vram, int xsize, int x, int y, char c, unsigned char *s
 	return;
 }
 
-void init_mouse_cursor8(char *mouse, char bc)
-/* マウスカーソルを準備（16x16） */
+void init_mouse_cursor8(char *mouse, char bc) 
 {
 	static char cursor[16][16] = {
 		"**************..",
