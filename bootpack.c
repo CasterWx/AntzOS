@@ -110,22 +110,7 @@ void init_palette(void)
  
 }
 
-void set_palette(int start, int end, unsigned char *rgb)
-{
-	int i, eflags;
-	eflags = io_load_eflags();	 
-	io_cli(); 				 
-	io_out8(0x03c8, start);
-	for (i = start; i <= end; i++) {
-		io_out8(0x03c9, rgb[0] / 4);
-		io_out8(0x03c9, rgb[1] / 4);
-		io_out8(0x03c9, rgb[2] / 4);
-		rgb += 3;
-	}
-	io_store_eflags(eflags);	 
-	return;
-}
-
+ 
 void boxfill8(unsigned char *vram, int xsize, unsigned char c, int x0, int y0, int x1, int y1)
 {
 	int x, y;
