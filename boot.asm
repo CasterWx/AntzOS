@@ -7,7 +7,6 @@
 	org  07c00h			; Boot 状态, Bios 将把 Boot Sector 加载到 0:7C00 处并开始执行
 %endif
 
-;================================================================================================
 %ifdef	_BOOT_DEBUG_
 BaseOfStack		equ	0100h	; 调试状态下堆栈基地址(栈底, 从这个位置向低地址生长)
 %else
@@ -16,7 +15,6 @@ BaseOfStack		equ	07c00h	; Boot状态下堆栈基地址(栈底, 从这个位置向低地址生长)
 
 BaseOfLoader		equ	09000h	; LOADER.BIN 被加载到的位置 ----  段地址
 OffsetOfLoader		equ	0100h	; LOADER.BIN 被加载到的位置 ---- 偏移地址
-;================================================================================================
 
 	jmp short LABEL_START		; Start to boot.
 	nop				; 这个 nop 不可少
