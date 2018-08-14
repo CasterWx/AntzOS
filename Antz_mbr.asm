@@ -14,7 +14,7 @@ SECTION MBR vstart=0x7c00
   mov cx,0
   mov dx,0x1010
   int 0x10
-
+	// output
   mov byte [gs:0x00],'A'
   mov byte [gs:0x01],0xA4
 
