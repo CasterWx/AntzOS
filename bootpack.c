@@ -79,7 +79,7 @@ void HariMain(void)
 	putfonts8_asc(binfo->vram, binfo->scrnx, 4, 57, COL8_FFFFFF, "AntzOS>_");
 
 
- 
+
 
 	for (;;) {
 		io_hlt();
@@ -107,10 +107,10 @@ void init_palette(void)
 	};
 	set_palette(0, 15, table_rgb);
 	return;
- 
+
 }
 
- 
+
 void boxfill8(unsigned char *vram, int xsize, unsigned char c, int x0, int y0, int x1, int y1)
 {
 	int x, y;
@@ -177,7 +177,7 @@ void putfonts8_asc(char *vram, int xsize, int x, int y, char c, unsigned char *s
 	return;
 }
 
-void init_mouse_cursor8(char *mouse, char bc) 
+void init_mouse_cursor8(char *mouse, char bc)
 {
 	static char cursor[16][16] = {
 		"**************..",

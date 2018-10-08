@@ -4,18 +4,18 @@ org  0100h
 ;================================================================================================
 BaseOfStack		equ	0100h
 
-BaseOfKernelFile	equ	 08000h	; KERNEL.BIN 被加载到的位置 ----  段地址
-OffsetOfKernelFile	equ	     0h	; KERNEL.BIN 被加载到的位置 ---- 偏移地址
+BaseOfKernelFile	equ	 08000h	; KERNEL.BIN 锟斤拷锟斤拷锟截碉拷锟斤拷位锟斤拷 ----  锟轿碉拷址
+OffsetOfKernelFile	equ	     0h	; KERNEL.BIN 锟斤拷锟斤拷锟截碉拷锟斤拷位锟斤拷 ---- 偏锟狡碉拷址
 
 ;================================================================================================
 
 	jmp	LABEL_START		; Start
 
-; 下面是 FAT12 磁盘的头, 之所以包含它是因为下面用到了磁盘的一些信息
+; 锟斤拷锟斤拷锟斤拷 FAT12 锟斤拷锟教碉拷头, 之锟斤拷锟皆帮拷锟斤拷锟斤拷锟斤拷锟斤拷为锟斤拷锟斤拷锟矫碉拷锟剿达拷锟教碉拷一些锟斤拷息
 %include	"fat12hdr.inc"
 
 
-LABEL_START:			; <--- 从这里开始 *************
+LABEL_START:			; <--- 锟斤拷锟斤拷锟斤开始 *************
 	mov	ax, cs
 	mov	ds, ax
 	mov	es, ax
@@ -23,21 +23,21 @@ LABEL_START:			; <--- 从这里开始 *************
 	mov	sp, BaseOfStack
 
 	mov	dh, 0			; "Loading  "
-	call	DispStr			; 显示字符串
+	call	DispStr			; 锟斤拷示锟街凤拷锟斤拷
 
-	; 下面在 A 盘的根目录寻找 KERNEL.BIN
-	mov	word [wSectorNo], SectorNoOfRootDirectory	
-	xor	ah, ah	; ┓
-	xor	dl, dl	; ┣ 软驱复位
-	int	13h	; ┛
+	; 锟斤拷锟斤拷锟斤拷 A 锟教的革拷目录寻锟斤拷 KERNEL.BIN
+	mov	word [wSectorNo], SectorNoOfRootDirectory
+	xor	ah, ah	; 锟斤拷
+	xor	dl, dl	; 锟斤拷 锟斤拷锟斤拷锟斤拷位
+	int	13h	; 锟斤拷
 LABEL_SEARCH_IN_ROOT_DIR_BEGIN:
-	cmp	word [wRootDirSizeForLoop], 0	; ┓
-	jz	LABEL_NO_KERNELBIN		; ┣ 判断根目录区是不是已经读完, 如果读完表示没有找到 KERNEL.BIN
-	dec	word [wRootDirSizeForLoop]	; ┛
+	cmp	word [wRootDirSizeForLoop], 0	; 锟斤拷
+	jz	LABEL_NO_KERNELBIN		; 锟斤拷 锟叫断革拷目录锟斤拷锟角诧拷锟斤拷锟窖撅拷锟斤拷锟斤拷, 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷示没锟斤拷锟揭碉拷 KERNEL.BIN
+	dec	word [wRootDirSizeForLoop]	; 锟斤拷
 	mov	ax, BaseOfKernelFile
 	mov	es, ax			; es <- BaseOfKernelFile
-	mov	bx, OffsetOfKernelFile	; bx <- OffsetOfKernelFile	于是, es:bx = BaseOfKernelFile:OffsetOfKernelFile = BaseOfKernelFile * 10h + OffsetOfKernelFile
-	mov	ax, [wSectorNo]		; ax <- Root Directory 中的某 Sector 号
+	mov	bx, OffsetOfKernelFile	; bx <- OffsetOfKernelFile	锟斤拷锟斤拷, es:bx = BaseOfKernelFile:OffsetOfKernelFile = BaseOfKernelFile * 10h + OffsetOfKernelFile
+	mov	ax, [wSectorNo]		; ax <- Root Directory 锟叫碉拷某 Sector 锟斤拷
 	mov	cl, 1
 	call	ReadSector
 
@@ -46,27 +46,27 @@ LABEL_SEARCH_IN_ROOT_DIR_BEGIN:
 	cld
 	mov	dx, 10h
 LABEL_SEARCH_FOR_KERNELBIN:
-	cmp	dx, 0					; ┓
-	jz	LABEL_GOTO_NEXT_SECTOR_IN_ROOT_DIR	; ┣ 循环次数控制, 如果已经读完了一个 Sector, 就跳到下一个 Sector
-	dec	dx					; ┛
+	cmp	dx, 0					; 锟斤拷
+	jz	LABEL_GOTO_NEXT_SECTOR_IN_ROOT_DIR	; 锟斤拷 循锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷, 锟斤拷锟斤拷锟窖撅拷锟斤拷锟斤拷锟斤拷一锟斤拷 Sector, 锟斤拷锟斤拷锟斤拷锟斤拷一锟斤拷 Sector
+	dec	dx					; 锟斤拷
 	mov	cx, 11
 LABEL_CMP_FILENAME:
-	cmp	cx, 0			; ┓
-	jz	LABEL_FILENAME_FOUND	; ┣ 循环次数控制, 如果比较了 11 个字符都相等, 表示找到
-	dec	cx			; ┛
+	cmp	cx, 0			; 锟斤拷
+	jz	LABEL_FILENAME_FOUND	; 锟斤拷 循锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷, 锟斤拷锟斤拷锟饺斤拷锟斤拷 11 锟斤拷锟街凤拷锟斤拷锟斤拷锟斤拷, 锟斤拷示锟揭碉拷
+	dec	cx			; 锟斤拷
 	lodsb				; ds:si -> al
 	cmp	al, byte [es:di]	; if al == es:di
 	jz	LABEL_GO_ON
 	jmp	LABEL_DIFFERENT
 LABEL_GO_ON:
 	inc	di
-	jmp	LABEL_CMP_FILENAME	;	继续循环
+	jmp	LABEL_CMP_FILENAME	;	锟斤拷锟斤拷循锟斤拷
 
 LABEL_DIFFERENT:
-	and	di, 0FFE0h		; else┓	这时di的值不知道是什么, di &= e0 为了让它是 20h 的倍数
-	add	di, 20h			;     ┃
-	mov	si, KernelFileName	;     ┣ di += 20h  下一个目录条目
-	jmp	LABEL_SEARCH_FOR_KERNELBIN;   ┛
+	and	di, 0FFE0h		; else锟斤拷	锟斤拷时di锟斤拷值锟斤拷知锟斤拷锟斤拷什么, di &= e0 为锟斤拷锟斤拷锟斤拷锟斤拷 20h 锟侥憋拷锟斤拷
+	add	di, 20h			;     锟斤拷
+	mov	si, KernelFileName	;     锟斤拷 di += 20h  锟斤拷一锟斤拷目录锟斤拷目
+	jmp	LABEL_SEARCH_FOR_KERNELBIN;   锟斤拷
 
 LABEL_GOTO_NEXT_SECTOR_IN_ROOT_DIR:
 	add	word [wSectorNo], 1
@@ -74,50 +74,50 @@ LABEL_GOTO_NEXT_SECTOR_IN_ROOT_DIR:
 
 LABEL_NO_KERNELBIN:
 	mov	dh, 2			; "No KERNEL."
-	call	DispStr			; 显示字符串
+	call	DispStr			; 锟斤拷示锟街凤拷锟斤拷
 %ifdef	_LOADER_DEBUG_
-	mov	ax, 4c00h		; ┓
-	int	21h			; ┛没有找到 KERNEL.BIN, 回到 DOS
+	mov	ax, 4c00h		; 锟斤拷
+	int	21h			; 锟斤拷没锟斤拷锟揭碉拷 KERNEL.BIN, 锟截碉拷 DOS
 %else
-	jmp	$			; 没有找到 KERNEL.BIN, 死循环在这里
+	jmp	$			; 没锟斤拷锟揭碉拷 KERNEL.BIN, 锟斤拷循锟斤拷锟斤拷锟斤拷锟斤拷
 %endif
 
-LABEL_FILENAME_FOUND:			; 找到 KERNEL.BIN 后便来到这里继续
+LABEL_FILENAME_FOUND:			; 锟揭碉拷 KERNEL.BIN 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
 	mov	ax, RootDirSectors
-	and	di, 0FFF0h		; di -> 当前条目的开始
+	and	di, 0FFF0h		; di -> 锟斤拷前锟斤拷目锟侥匡拷始
 
 	push	eax
-	mov	eax, [es : di + 01Ch]		; ┓
-	mov	dword [dwKernelSize], eax	; ┛保存 KERNEL.BIN 文件大小
+	mov	eax, [es : di + 01Ch]		; 锟斤拷
+	mov	dword [dwKernelSize], eax	; 锟斤拷锟斤拷锟斤拷 KERNEL.BIN 锟侥硷拷锟斤拷小
 	pop	eax
 
-	add	di, 01Ah		; di -> 首 Sector
+	add	di, 01Ah		; di -> 锟斤拷 Sector
 	mov	cx, word [es:di]
-	push	cx			; 保存此 Sector 在 FAT 中的序号
+	push	cx			; 锟斤拷锟斤拷锟斤拷 Sector 锟斤拷 FAT 锟叫碉拷锟斤拷锟斤拷
 	add	cx, ax
-	add	cx, DeltaSectorNo	; 这时 cl 里面是 LOADER.BIN 的起始扇区号 (从 0 开始数的序号)
+	add	cx, DeltaSectorNo	; 锟斤拷时 cl 锟斤拷锟斤拷锟斤拷 LOADER.BIN 锟斤拷锟斤拷始锟斤拷锟斤拷锟斤拷 (锟斤拷 0 锟斤拷始锟斤拷锟斤拷锟斤拷锟斤拷)
 	mov	ax, BaseOfKernelFile
 	mov	es, ax			; es <- BaseOfKernelFile
-	mov	bx, OffsetOfKernelFile	; bx <- OffsetOfKernelFile	于是, es:bx = BaseOfKernelFile:OffsetOfKernelFile = BaseOfKernelFile * 10h + OffsetOfKernelFile
-	mov	ax, cx			; ax <- Sector 号
+	mov	bx, OffsetOfKernelFile	; bx <- OffsetOfKernelFile	锟斤拷锟斤拷, es:bx = BaseOfKernelFile:OffsetOfKernelFile = BaseOfKernelFile * 10h + OffsetOfKernelFile
+	mov	ax, cx			; ax <- Sector 锟斤拷
 
 LABEL_GOON_LOADING_FILE:
-	push	ax			; ┓
-	push	bx			; ┃
-	mov	ah, 0Eh			; ┃ 每读一个扇区就在 "Loading  " 后面打一个点, 形成这样的效果:
-	mov	al, '.'			; ┃
-	mov	bl, 0Fh			; ┃ Loading ......
-	int	10h			; ┃
-	pop	bx			; ┃
-	pop	ax			; ┛
+	push	ax			; 锟斤拷
+	push	bx			; 锟斤拷
+	mov	ah, 0Eh			; 锟斤拷 每锟斤拷一锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷 "Loading  " 锟斤拷锟斤拷锟斤拷一锟斤拷锟斤拷, 锟轿筹拷锟斤拷锟斤拷锟斤拷效锟斤拷:
+	mov	al, '.'			; 锟斤拷
+	mov	bl, 0Fh			; 锟斤拷 Loading ......
+	int	10h			; 锟斤拷
+	pop	bx			; 锟斤拷
+	pop	ax			; 锟斤拷
 
 	mov	cl, 1
 	call	ReadSector
-	pop	ax			; 取出此 Sector 在 FAT 中的序号
+	pop	ax			; 取锟斤拷锟斤拷 Sector 锟斤拷 FAT 锟叫碉拷锟斤拷锟斤拷
 	call	GetFATEntry
 	cmp	ax, 0FFFh
 	jz	LABEL_FILE_LOADED
-	push	ax			; 保存 Sector 在 FAT 中的序号
+	push	ax			; 锟斤拷锟斤拷 Sector 锟斤拷 FAT 锟叫碉拷锟斤拷锟斤拷
 	mov	dx, RootDirSectors
 	add	ax, dx
 	add	ax, DeltaSectorNo
@@ -125,27 +125,27 @@ LABEL_GOON_LOADING_FILE:
 	jmp	LABEL_GOON_LOADING_FILE
 LABEL_FILE_LOADED:
 
-	call	KillMotor		; 关闭软驱马达
+	call	KillMotor		; 锟截憋拷锟斤拷锟斤拷锟斤拷锟斤拷
 
 	mov	dh, 1			; "Ready."
-	call	DispStr			; 显示字符串
+	call	DispStr			; 锟斤拷示锟街凤拷锟斤拷
 
 	jmp	$
 
 
 ;============================================================================
-;变量
+;锟斤拷锟斤拷
 ;----------------------------------------------------------------------------
-wRootDirSizeForLoop	dw	RootDirSectors	; Root Directory 占用的扇区数
-wSectorNo		dw	0		; 要读取的扇区号
-bOdd			db	0		; 奇数还是偶数
-dwKernelSize		dd	0		; KERNEL.BIN 文件大小
+wRootDirSizeForLoop	dw	RootDirSectors	; Root Directory 占锟矫碉拷锟斤拷锟斤拷锟斤拷
+wSectorNo		dw	0		; 要锟斤拷取锟斤拷锟斤拷锟斤拷锟斤拷
+bOdd			db	0		; 锟斤拷锟斤拷锟斤拷锟斤拷偶锟斤拷
+dwKernelSize		dd	0		; KERNEL.BIN 锟侥硷拷锟斤拷小
 
 ;============================================================================
-;字符串
+;锟街凤拷锟斤拷
 ;----------------------------------------------------------------------------
-KernelFileName		db	"KERNEL  BIN", 0	; KERNEL.BIN 之文件名
-; 为简化代码, 下面每个字符串的长度均为 MessageLength
+KernelFileName		db	"KERNEL  BIN", 0	; KERNEL.BIN 之锟侥硷拷锟斤拷
+; 为锟津化达拷锟斤拷, 锟斤拷锟斤拷每锟斤拷锟街凤拷锟斤拷锟侥筹拷锟饺撅拷为 MessageLength
 MessageLength		equ	9
 LoadMessage:		db	"Loading  "
 Message1		db	"Ready.   "
@@ -153,61 +153,61 @@ Message2		db	"No KERNEL"
 ;============================================================================
 
 ;----------------------------------------------------------------------------
-; 函数名: DispStr
+; 锟斤拷锟斤拷锟斤拷: DispStr
 ;----------------------------------------------------------------------------
-; 作用:
-;	显示一个字符串, 函数开始时 dh 中应该是字符串序号(0-based)
+; 锟斤拷锟斤拷:
+;	锟斤拷示一锟斤拷锟街凤拷锟斤拷, 锟斤拷锟斤拷锟斤拷始时 dh 锟斤拷应锟斤拷锟斤拷锟街凤拷锟斤拷锟斤拷锟斤拷(0-based)
 DispStr:
 	mov	ax, MessageLength
 	mul	dh
 	add	ax, LoadMessage
-	mov	bp, ax			; ┓
-	mov	ax, ds			; ┣ ES:BP = 串地址
-	mov	es, ax			; ┛
-	mov	cx, MessageLength	; CX = 串长度
+	mov	bp, ax			; 锟斤拷
+	mov	ax, ds			; 锟斤拷 ES:BP = 锟斤拷锟斤拷址
+	mov	es, ax			; 锟斤拷
+	mov	cx, MessageLength	; CX = 锟斤拷锟斤拷锟斤拷
 	mov	ax, 01301h		; AH = 13,  AL = 01h
-	mov	bx, 0007h		; 页号为0(BH = 0) 黑底白字(BL = 07h)
+	mov	bx, 0007h		; 页锟斤拷为0(BH = 0) 锟节底帮拷锟斤拷(BL = 07h)
 	mov	dl, 0
-	add	dh, 3			; 从第 3 行往下显示
+	add	dh, 3			; 锟接碉拷 3 锟斤拷锟斤拷锟斤拷锟斤拷示
 	int	10h			; int 10h
 	ret
 ;----------------------------------------------------------------------------
-; 函数名: ReadSector
+; 锟斤拷锟斤拷锟斤拷: ReadSector
 ;----------------------------------------------------------------------------
-; 作用:
-;	从序号(Directory Entry 中的 Sector 号)为 ax 的的 Sector 开始, 将 cl 个 Sector 读入 es:bx 中
+; 锟斤拷锟斤拷:
+;	锟斤拷锟斤拷锟斤拷(Directory Entry 锟叫碉拷 Sector 锟斤拷)为 ax 锟侥碉拷 Sector 锟斤拷始, 锟斤拷 cl 锟斤拷 Sector 锟斤拷锟斤拷 es:bx 锟斤拷
 ReadSector:
 	; -----------------------------------------------------------------------
-	; 怎样由扇区号求扇区在磁盘中的位置 (扇区号 -> 柱面号, 起始扇区, 磁头号)
+	; 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷位锟斤拷 (锟斤拷锟斤拷锟斤拷 -> 锟斤拷锟斤拷锟斤拷, 锟斤拷始锟斤拷锟斤拷, 锟斤拷头锟斤拷)
 	; -----------------------------------------------------------------------
-	; 设扇区号为 x
-	;                           ┌ 柱面号 = y >> 1
-	;       x           ┌ 商 y ┤
-	; -------------- => ┤      └ 磁头号 = y & 1
-	;  每磁道扇区数     │
-	;                   └ 余 z => 起始扇区号 = z + 1
+	; 锟斤拷锟斤拷锟斤拷锟斤拷为 x
+	;                           锟斤拷 锟斤拷锟斤拷锟斤拷 = y >> 1
+	;       x           锟斤拷 锟斤拷 y 锟斤拷
+	; -------------- => 锟斤拷      锟斤拷 锟斤拷头锟斤拷 = y & 1
+	;  每锟脚碉拷锟斤拷锟斤拷锟斤拷     锟斤拷
+	;                   锟斤拷 锟斤拷 z => 锟斤拷始锟斤拷锟斤拷锟斤拷 = z + 1
 	push	bp
 	mov	bp, sp
-	sub	esp, 2			; 辟出两个字节的堆栈区域保存要读的扇区数: byte [bp-2]
+	sub	esp, 2			; 锟劫筹拷锟斤拷锟斤拷锟街节的讹拷栈锟斤拷锟津保达拷要锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷: byte [bp-2]
 
 	mov	byte [bp-2], cl
-	push	bx			; 保存 bx
-	mov	bl, [BPB_SecPerTrk]	; bl: 除数
-	div	bl			; y 在 al 中, z 在 ah 中
+	push	bx			; 锟斤拷锟斤拷 bx
+	mov	bl, [BPB_SecPerTrk]	; bl: 锟斤拷锟斤拷
+	div	bl			; y 锟斤拷 al 锟斤拷, z 锟斤拷 ah 锟斤拷
 	inc	ah			; z ++
-	mov	cl, ah			; cl <- 起始扇区号
+	mov	cl, ah			; cl <- 锟斤拷始锟斤拷锟斤拷锟斤拷
 	mov	dh, al			; dh <- y
-	shr	al, 1			; y >> 1 (其实是 y/BPB_NumHeads, 这里BPB_NumHeads=2)
-	mov	ch, al			; ch <- 柱面号
-	and	dh, 1			; dh & 1 = 磁头号
-	pop	bx			; 恢复 bx
-	; 至此, "柱面号, 起始扇区, 磁头号" 全部得到 ^^^^^^^^^^^^^^^^^^^^^^^^
-	mov	dl, [BS_DrvNum]		; 驱动器号 (0 表示 A 盘)
+	shr	al, 1			; y >> 1 (锟斤拷实锟斤拷 y/BPB_NumHeads, 锟斤拷锟斤拷BPB_NumHeads=2)
+	mov	ch, al			; ch <- 锟斤拷锟斤拷锟斤拷
+	and	dh, 1			; dh & 1 = 锟斤拷头锟斤拷
+	pop	bx			; 锟街革拷 bx
+	; 锟斤拷锟斤拷, "锟斤拷锟斤拷锟斤拷, 锟斤拷始锟斤拷锟斤拷, 锟斤拷头锟斤拷" 全锟斤拷锟矫碉拷 ^^^^^^^^^^^^^^^^^^^^^^^^
+	mov	dl, [BS_DrvNum]		; 锟斤拷锟斤拷锟斤拷锟斤拷 (0 锟斤拷示 A 锟斤拷)
 .GoOnReading:
-	mov	ah, 2			; 读
-	mov	al, byte [bp-2]		; 读 al 个扇区
+	mov	ah, 2			; 锟斤拷
+	mov	al, byte [bp-2]		; 锟斤拷 al 锟斤拷锟斤拷锟斤拷
 	int	13h
-	jc	.GoOnReading		; 如果读取错误 CF 会被置为 1, 这时就不停地读, 直到正确为止
+	jc	.GoOnReading		; 锟斤拷锟斤拷锟斤拷取锟斤拷锟斤拷 CF 锟结被锟斤拷为 1, 锟斤拷时锟酵诧拷停锟截讹拷, 直锟斤拷锟斤拷确为止
 
 	add	esp, 2
 	pop	bp
@@ -215,37 +215,37 @@ ReadSector:
 	ret
 
 ;----------------------------------------------------------------------------
-; 函数名: GetFATEntry
+; 锟斤拷锟斤拷锟斤拷: GetFATEntry
 ;----------------------------------------------------------------------------
-; 作用:
-;	找到序号为 ax 的 Sector 在 FAT 中的条目, 结果放在 ax 中
-;	需要注意的是, 中间需要读 FAT 的扇区到 es:bx 处, 所以函数一开始保存了 es 和 bx
+; 锟斤拷锟斤拷:
+;	锟揭碉拷锟斤拷锟斤拷为 ax 锟斤拷 Sector 锟斤拷 FAT 锟叫碉拷锟斤拷目, 锟斤拷锟斤拷锟斤拷锟斤拷 ax 锟斤拷
+;	锟斤拷要注锟斤拷锟斤拷锟斤拷, 锟叫硷拷锟斤拷要锟斤拷 FAT 锟斤拷锟斤拷锟斤拷锟斤拷 es:bx 锟斤拷, 锟斤拷锟皆猴拷锟斤拷一锟斤拷始锟斤拷锟斤拷锟斤拷 es 锟斤拷 bx
 GetFATEntry:
 	push	es
 	push	bx
 	push	ax
-	mov	ax, BaseOfKernelFile	; ┓
-	sub	ax, 0100h		; ┣ 在 BaseOfKernelFile 后面留出 4K 空间用于存放 FAT
-	mov	es, ax			; ┛
+	mov	ax, BaseOfKernelFile	; 锟斤拷
+	sub	ax, 0100h		; 锟斤拷 锟斤拷 BaseOfKernelFile 锟斤拷锟斤拷锟斤拷锟斤拷 4K 锟秸硷拷锟斤拷锟节达拷锟斤拷 FAT
+	mov	es, ax			; 锟斤拷
 	pop	ax
 	mov	byte [bOdd], 0
 	mov	bx, 3
 	mul	bx			; dx:ax = ax * 3
 	mov	bx, 2
-	div	bx			; dx:ax / 2  ==>  ax <- 商, dx <- 余数
+	div	bx			; dx:ax / 2  ==>  ax <- 锟斤拷, dx <- 锟斤拷锟斤拷
 	cmp	dx, 0
 	jz	LABEL_EVEN
 	mov	byte [bOdd], 1
-LABEL_EVEN:;偶数
-	xor	dx, dx			; 现在 ax 中是 FATEntry 在 FAT 中的偏移量. 下面来计算 FATEntry 在哪个扇区中(FAT占用不止一个扇区)
+LABEL_EVEN:;偶锟斤拷
+	xor	dx, dx			; 锟斤拷锟斤拷 ax 锟斤拷锟斤拷 FATEntry 锟斤拷 FAT 锟叫碉拷偏锟斤拷锟斤拷. 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷 FATEntry 锟斤拷锟侥革拷锟斤拷锟斤拷锟斤拷(FAT占锟矫诧拷止一锟斤拷锟斤拷锟斤拷)
 	mov	bx, [BPB_BytsPerSec]
-	div	bx			; dx:ax / BPB_BytsPerSec  ==>	ax <- 商   (FATEntry 所在的扇区相对于 FAT 来说的扇区号)
-					;				dx <- 余数 (FATEntry 在扇区内的偏移)。
+	div	bx			; dx:ax / BPB_BytsPerSec  ==>	ax <- 锟斤拷   (FATEntry 锟斤拷锟节碉拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷 FAT 锟斤拷说锟斤拷锟斤拷锟斤拷锟斤拷)
+					;				dx <- 锟斤拷锟斤拷 (FATEntry 锟斤拷锟斤拷锟斤拷锟节碉拷偏锟斤拷)锟斤拷
 	push	dx
-	mov	bx, 0			; bx <- 0	于是, es:bx = (BaseOfKernelFile - 100):00 = (BaseOfKernelFile - 100) * 10h
-	add	ax, SectorNoOfFAT1	; 此句执行之后的 ax 就是 FATEntry 所在的扇区号
+	mov	bx, 0			; bx <- 0	锟斤拷锟斤拷, es:bx = (BaseOfKernelFile - 100):00 = (BaseOfKernelFile - 100) * 10h
+	add	ax, SectorNoOfFAT1	; 锟剿撅拷执锟斤拷之锟斤拷锟斤拷 ax 锟斤拷锟斤拷 FATEntry 锟斤拷锟节碉拷锟斤拷锟斤拷锟斤拷
 	mov	cl, 2
-	call	ReadSector		; 读取 FATEntry 所在的扇区, 一次读两个, 避免在边界发生错误, 因为一个 FATEntry 可能跨越两个扇区
+	call	ReadSector		; 锟斤拷取 FATEntry 锟斤拷锟节碉拷锟斤拷锟斤拷, 一锟轿讹拷锟斤拷锟斤拷, 锟斤拷锟斤拷锟节边界发锟斤拷锟斤拷锟斤拷, 锟斤拷为一锟斤拷 FATEntry 锟斤拷锟杰匡拷越锟斤拷锟斤拷锟斤拷锟斤拷
 	pop	dx
 	add	bx, dx
 	mov	ax, [es:bx]
@@ -264,10 +264,10 @@ LABEL_GET_FAT_ENRY_OK:
 
 
 ;----------------------------------------------------------------------------
-; 函数名: KillMotor
+; 锟斤拷锟斤拷锟斤拷: KillMotor
 ;----------------------------------------------------------------------------
-; 作用:
-;	关闭软驱马达
+; 锟斤拷锟斤拷:
+;	锟截憋拷锟斤拷锟斤拷锟斤拷锟斤拷
 KillMotor:
 	push	dx
 	mov	dx, 03F2h
@@ -276,4 +276,3 @@ KillMotor:
 	pop	dx
 	ret
 ;----------------------------------------------------------------------------
-
