@@ -4,39 +4,97 @@
 extern struct FIFO8 keyfifo, mousefifo;
 void enable_mouse(void);
 void init_keyboard(void);
+void new_pe(struct BOOTINFO *binfo);
+
 int write_x = 55 ;
 int write_y = 57 ;
 
-void new_pe(struct BOOTINFO *binfo){
-	write_x = 55 ;
-	write_y = 19 ;
-	// 右边并没有保存
-	init_screen8(binfo->vram, binfo->scrnx, binfo->scrny);
-	putfonts8_asc(binfo->vram, binfo->scrnx,  0,  0, COL8_FFFFFF, "Terminal-Antz");
-	putfonts8_asc(binfo->vram, binfo->scrnx,  0,  0, COL8_000000, "Terminal-Antz");
-	putfonts8_asc(binfo->vram, binfo->scrnx,  107,  0, COL8_000000, "|-|o|x|");
-	putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
+char* replace_char(char s[40]){
+	char *chr = "&";
+	if(strcmp(s,"1E")==0){
+			chr = "A" ;
+	}else if(strcmp(s,"30")==0){
+			chr = "B" ;
+	}else if(strcmp(s,"2E")==0){
+			chr = "C" ;
+	}else if(strcmp(s,"20")==0){
+			chr = "D" ;
+	}else if(strcmp(s,"12")==0){
+			chr = "E" ;
+	}else if(strcmp(s,"21")==0){
+			chr = "F" ;
+	}else if(strcmp(s,"22")==0){
+			chr = "G" ;
+	}else if(strcmp(s,"23")==0){
+			chr = "H" ;
+	}else if(strcmp(s,"17")==0){
+		chr = "I" ;
+	}else if(strcmp(s,"24")==0){
+		chr = "J" ;
+	}else if(strcmp(s,"25")==0){
+		chr = "K" ;
+	}else if(strcmp(s,"26")==0){
+		chr = "L" ;
+	}else if(strcmp(s,"32")==0){
+		chr = "M" ;
+	}else if(strcmp(s,"31")==0){
+		chr = "N" ;
+	}else if(strcmp(s,"18")==0){
+		chr = "O" ;
+	}else if(strcmp(s,"19")==0){
+		chr = "P" ;
+	}else if(strcmp(s,"10")==0){
+		chr = "Q" ;
+	}else if(strcmp(s,"13")==0){
+		chr = "R" ;
+	}else if(strcmp(s,"1F")==0){
+		chr = "S" ;
+	}else if(strcmp(s,"14")==0){
+		chr = "T" ;
+	}else if(strcmp(s,"16")==0){
+		chr = "U" ;
+	}else if(strcmp(s,"2F")==0){
+		chr = "V" ;
+	}else if(strcmp(s,"11")==0){
+		chr = "W" ;
+	}else if(strcmp(s,"2D")==0){
+		chr = "X" ;
+	}else if(strcmp(s,"15")==0){
+		chr = "Y" ;
+	}else if(strcmp(s,"2C")==0){
+		chr = "Z" ;
+	}
+	return chr ;
 }
+
+int flag = 1 ;
+
 void key(struct BOOTINFO *binfo,char s[40]){
 	if(strcmp(s,"1C")==0){
-			write_x = 55 ;
+			write_x = 58 ;
 			write_y += 19 ;
-			putfonts8_asc(binfo->vram, binfo->scrnx, 0, write_y, COL8_FFFFFF, "AntzOS>");
-	}else if(strcmp(s,"3B")==0){
+			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
+	}else if((strcmp(s,"3B")==0)||(strcmp(s,"BB")==0)){
+			flag = 0 ;
 			new_pe(binfo);
 	}else if(strcmp(s,"39")==0){
 			putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, " ");
-			write_x += 19 ;
+			write_x += 8 ;
 	}else if(strcmp(s,"0E")==0){
 			// 回退
-			write_x -= 19 ;
+			write_x -= 8 ;
 			boxfill8(binfo->vram, binfo->scrnx , COL8_000000,  write_x,     write_y,     write_x+19, write_y+19);
+			if(write_x<=58){ 
+				write_x = 146 ;
+				write_y -= 19 ;
+			}
 	}else {
-			putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, s);
-			write_x += 19 ;
+			//putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, s);
+			putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, replace_char(s));
+			write_x += 8 ;
 	}
-	if(write_x>155){
-		write_x = 55 ;
+	if(write_x>148){
+		write_x = 58 ;
 		write_y += 19 ;
 		//putfonts8_asc(binfo->vram, binfo->scrnx, 4, 57, COL8_FFFFFF, "AntzOS>");
 	}
@@ -46,7 +104,6 @@ void key(struct BOOTINFO *binfo,char s[40]){
 
 }
 
-int flag = 1 ;
 void HariMain(void)
 {
 	struct BOOTINFO *binfo = (struct BOOTINFO *) ADR_BOOTINFO;
@@ -104,6 +161,17 @@ void HariMain(void)
 	}
 }
 
+void new_pe(struct BOOTINFO *binfo){
+	write_x = 58 ;
+	write_y = 19 ;
+	// 右边并没有保存
+	init_screen8(binfo->vram, binfo->scrnx, binfo->scrny);
+	putfonts8_asc(binfo->vram, binfo->scrnx,  0,  0, COL8_FFFFFF, "Terminal-Antz");
+	putfonts8_asc(binfo->vram, binfo->scrnx,  0,  0, COL8_000000, "Terminal-Antz");
+	putfonts8_asc(binfo->vram, binfo->scrnx,  107,  0, COL8_000000, "|-|o|x|");
+	putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
+}
+
 #define PORT_KEYDAT				0x0060
 #define PORT_KEYSTA				0x0064
 #define PORT_KEYCMD				0x0064
@@ -136,7 +204,7 @@ void init_keyboard(void)
 #define MOUSECMD_ENABLE			0xf4
 
 void enable_mouse(void)
-{ 
+{
 	wait_KBC_sendready();
 	io_out8(PORT_KEYCMD, KEYCMD_SENDTO_MOUSE);
 	wait_KBC_sendready();
