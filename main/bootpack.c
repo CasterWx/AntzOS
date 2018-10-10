@@ -99,9 +99,6 @@ void HariMain(void)
 			} else if (fifo8_status(&mousefifo) != 0) {
 				i = fifo8_get(&mousefifo);
 				io_sti();
-				//sprintf(s, "%02X", i);
-				//boxfill8(binfo->vram, binfo->scrnx, COL8_008484, 32, 16, 47, 31);
-				//putfonts8_asc(binfo->vram, binfo->scrnx, 32, 16, COL8_FFFFFF, s);
 			}
 		}
 	}
@@ -139,8 +136,7 @@ void init_keyboard(void)
 #define MOUSECMD_ENABLE			0xf4
 
 void enable_mouse(void)
-{
-	/* 激活鼠标 */
+{ 
 	wait_KBC_sendready();
 	io_out8(PORT_KEYCMD, KEYCMD_SENDTO_MOUSE);
 	wait_KBC_sendready();
