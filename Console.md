@@ -16,11 +16,14 @@
 >   Makefile
 
 ### 项目目录
-[!s](https://www.cnblogs.com/images/cnblogs_com/LexMoon/1246510/o_project.jpg)
+
+![s](https://www.cnblogs.com/images/cnblogs_com/LexMoon/1246510/o_project.jpg)
 
 #### console的图形化实现与规则均在main/bootpack.c中完成
 
 #### interrupt/int.c 中实现了键盘中断处理，按键会中断两次，一次按下，一次弹起，在响应处理中，只需要处理第一次按下即可。
+
+## 一 . 键盘按键
 
 #### 如何来判断中断来自于键盘？(代码如下)
 ```
@@ -52,3 +55,102 @@
 #### 这是一个很拙略的实现方法，而且我测试了几次之后发现有一个bug，就是同时按下两个键位时，屏蔽的方法就会变成另一种。
 #### 比如开始是用按下识别一个键位，那么同时按下两个键位之后就是以弹起的方法来识别键位了。
 
+#### 这个情况留在之后再考虑。
+
+## 按键识别
+
+#### 上文中已经将按键返回的数据存储到了char数组s，只需要在屏幕上显示s的数据就可以了。
+
+```
+int write_x = 55 ; //按键显示位置的x，y坐标
+int write_y = 57 ;
+
+void key(struct BOOTINFO *binfo,char s[40]){
+    //在指定位置显示数据
+    showkeys(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, s);
+    // 显示之后光标右移
+    write_x += 19 ;
+    // 如果超出右边界，换行
+	if(write_x>155){
+		write_x = 55 ;
+		write_y += 19 ;
+	}
+	// 如果超出下边界，刷新清理本页，开启新的一页
+	if(write_y>180){
+ 		new_pe(binfo);
+	}
+
+}
+```
+### 结果：
+![print](https://www.cnblogs.com/images/cnblogs_com/LexMoon/1246510/o_print.jpg)
+
+#### 很明显，我们需要编写一种转换机制，将表示16进制的数据对应成为键盘按键。
+
+#### 键盘上需要显示的有字母和特殊符号，还有一些功能性的按键shift，backspace等。
+
+#### 测试记录了几个按键的按下数据
+>  键盘    按下  
+
+>   F1      3B   
+
+>   F2      3C   
+
+>   F3      3D   
+
+>   F4      3E   
+
+>   A       1E   
+
+>   B       30   
+
+>   Backspace  OE
+
+>   空格      39
+
+#### 既然已经知道了对应关系，那么很容易就可以建立一种对应。
+
+#### 先来实现这几个特殊按键功能 
+
+#### 我打算将 F1 实现为 clear 功能，实现页面刷新 。 Backspace 实现回退功能。Enter实现确定以及回车功能。
+
+```
+void showkey(struct BOOTINFO *binfo,char s[40]){
+	// 回车键 
+	if(strcmp(s,"1C")==0){ 
+			write_x = 55 ;  // 光标移动至下一行起始位置。
+			write_y += 19 ;
+			showkeys(binfo->vram, binfo->scrnx, 0, write_y, COL8_FFFFFF, "AntzOS>");
+	}
+	// F1   刷新本页
+	else if(strcmp(s,"3B")==0){
+			new_pe(binfo);
+	}
+	// 空格  光标后移一位
+	else if(strcmp(s,"39")==0){
+			showkeys(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, " ");
+			write_x += 19 ;
+	}
+	// Backspace 删除退格
+	else if(strcmp(s,"0E")==0){
+			// 回退
+			write_x -= 19 ;
+			//重新覆盖这片区域
+			area_flash(binfo->vram, binfo->scrnx , COL8_000000,  write_x,     write_y,     write_x+19, write_y+19);
+	}
+	// 其他按键
+	else {
+			showkeys(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, s);
+			write_x += 19 ;
+	}
+	if(write_x>155){
+		write_x = 55 ;
+		write_y += 19 ;
+		//putfonts8_asc(binfo->vram, binfo->scrnx, 4, 57, COL8_FFFFFF, "AntzOS>");
+	}
+	if(write_y>180){
+ 		new_pe(binfo);
+	}
+
+}
+```
