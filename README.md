@@ -5,6 +5,20 @@
 
 * Antz系统更新地址： [这里是链接](https://www.cnblogs.com/LexMoon/category/1262287.html)
 
+#### [mbr实现](https://www.cnblogs.com/LexMoon/p/antz01.html)
+
+#### [保护模式](https://www.cnblogs.com/LexMoon/p/antz02.html)
+
+#### [显存](https://www.cnblogs.com/LexMoon/p/antz03.html)
+
+#### [硬盘](https://www.cnblogs.com/LexMoon/p/antz04.html)
+
+#### [进入保护模式](https://www.cnblogs.com/LexMoon/p/antz05.html)
+
+#### [引入c语言](https://www.cnblogs.com/LexMoon/p/antz09.html)
+
+#### [shell实现](https://github.com/CasterWx/AntzOS/blob/master/main/Console.md)
+
  
 ## 用了一个简单的字符库
 
