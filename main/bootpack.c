@@ -24,6 +24,13 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			putfonts8_asc(binfo->vram, binfo->scrnx, 0, write_y, COL8_FFFFFF, "AntzOS>");
 	}else if(strcmp(s,"3B")==0){
 			new_pe(binfo);
+	}else if(strcmp(s,"39")==0){
+			putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, " ");
+			write_x += 19 ;
+	}else if(strcmp(s,"0E")==0){
+			// 回退
+			write_x -= 19 ;
+			boxfill8(binfo->vram, binfo->scrnx , COL8_000000,  write_x,     write_y,     write_x+19, write_y+19);
 	}else {
 			putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, s);
 			write_x += 19 ;
