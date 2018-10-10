@@ -1,5 +1,4 @@
-/* GDT、IDT、descriptor table 关系处理 */
-
+//	GDT
 #include "todo.h"
 
 void init_gdtidt(void)
