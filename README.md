@@ -6,3 +6,19 @@
 * Antz系统更新地址： [这里是链接](https://www.cnblogs.com/LexMoon/category/1262287.html)
 
  
+## 用了一个简单的字符库
+
+```
+char.bin : char.txt Makefile
+	$(MAKEFONT) char.txt char.bin
+
+char.set : char.bin Makefile
+	$(BIN2OBJ) char.bin assic/char.set _hankaku
+```
+### 我把char.set直接存放在了assic文件夹中，直接拿来使用，不过只是ASSIC支持的字符，中文字符库找不到
+
+
+## 去除鼠标
+
+### 在鼠标存在的情况下，移动会导致后面的界面发生变化，图形化界面虽然容易保存现场结果，但终端部分缺会失去部分显示结果
+
