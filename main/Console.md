@@ -114,6 +114,7 @@ void key(struct BOOTINFO *binfo,char s[40]){
 
 #### 我打算将 F1 实现为 clear 功能，实现页面刷新 。 Backspace 实现回退功能。Enter实现确定以及回车功能。
 
+#### Clear为了确保安全性，对F1按键的两种中断都会发生响应。
 ```
 void showkey(struct BOOTINFO *binfo,char s[40]){
 	// 回车键 
@@ -164,3 +165,4 @@ void showkey(struct BOOTINFO *binfo,char s[40]){
 >   Caps Lock(大小写键) 是否开启并不会影响中断对你一个按键的返回信息，也就是所谓的大小写中断其实是无法区分的，那么现代系统如何区分呢？ 同理于上面我们区分按下和弹起两次中断，我们可以将Caps Lock键的状态获取到，从而对当前按键进行所谓的大小写区分。
 
 >   按下两次导致规则置换，会不会是因为中断响应的时间导致的。
+
