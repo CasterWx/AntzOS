@@ -93,7 +93,19 @@ void action_command(struct BOOTINFO *binfo){
 			// get new data;
 			write_y += 19 ;
 			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS in 2018");
+		}else if(strcmp(command,"cls")==0){
+			flag = 0 ;
+			new_pe(binfo);
+		}else if(strcmp(command,"version")==0){
+			write_y += 19 ;
+			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "Antz.version.1.1");
+		}else if(strcmp(command,"help")==0){
+			// help内容过多，显示在图形化界面区域
+			
 		}
+
+
+		// 命令缓存清除
 		sprintf(command,"%s","");
 }
 
