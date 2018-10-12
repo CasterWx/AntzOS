@@ -51,8 +51,6 @@ run :
 clean :
 	-$(DEL) *.bin
 	-$(DEL) *.lst
-	-$(DEL) *.gas
-	-$(DEL) *.obj
 
 	-$(DEL) asmfunc\naskfunc.lst
 	-$(DEL) asmfunc\naskfunc.obj
@@ -71,8 +69,7 @@ clean :
 
 	-$(DEL) windows\graphic.lst
 	-$(DEL) windows\graphic.obj
-
-	-$(DEL) bootpack.nas
+ 
 	-$(DEL) bootpack.map
 	-$(DEL) bootpack.bim
 	-$(DEL) bootpack.hrb
