@@ -46,7 +46,7 @@ img :
 
 run :
 	$(MAKE) img > log/build.log
-	$(MAKE) clean
+	$(MAKE) clean > log/delete.log
 
 clean :
 	-$(DEL) *.bin
