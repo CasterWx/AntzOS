@@ -101,8 +101,8 @@ putloop:
 
 fin:
 		HLT
-		JMP		fin				; 无限循环
-
+		JMP		fin
+		
 msg:
 		DB		0x0a, 0x0a		; 换行两次
 		DB		"load error"
