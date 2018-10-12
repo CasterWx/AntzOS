@@ -5,12 +5,12 @@ nask.exe boot/mbr.asm mbr.bin mbr.lst
 nask.exe boot/asmhead.asm asmhead.bin asmhead.lst
 cc1.exe -I lib/ -Os -Wall -quiet -o main/bootpack.gas main/bootpack.c
 main/bootpack.c: In function `HariMain':
-main/bootpack.c:182: warning: implicit declaration of function `io_stihlt'
-main/bootpack.c:153: warning: unused variable `mcursor'
-main/bootpack.c:154: warning: unused variable `mx'
-main/bootpack.c:154: warning: unused variable `my'
+main/bootpack.c:188: warning: implicit declaration of function `io_stihlt'
+main/bootpack.c:159: warning: unused variable `mcursor'
+main/bootpack.c:160: warning: unused variable `mx'
+main/bootpack.c:160: warning: unused variable `my'
 main/bootpack.c: In function `wait_KBC_sendready':
-main/bootpack.c:229: warning: implicit declaration of function `io_in8'
+main/bootpack.c:236: warning: implicit declaration of function `io_in8'
 gas2nask.exe -a main/bootpack.gas main/bootpack.nas
 nask.exe main/bootpack.nas main/bootpack.obj main/bootpack.lst
 nask.exe asmfunc/naskfunc.nas asmfunc/naskfunc.obj asmfunc/naskfunc.lst
