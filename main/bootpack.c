@@ -101,10 +101,8 @@ void action_command(struct BOOTINFO *binfo){
 			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "Antz.version.1.1");
 		}else if(strcmp(command,"help")==0){
 			// help内容过多，显示在图形化界面区域
-			
+
 		}
-
-
 		// 命令缓存清除
 		sprintf(command,"%s","");
 }
