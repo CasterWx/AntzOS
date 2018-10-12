@@ -1,40 +1,36 @@
-BOTPAK	EQU		0x00280000		; 加载bootpack
-DSKCAC	EQU		0x00100000		; 磁盘缓存的位置
-DSKCAC0	EQU		0x00008000		; 磁盘缓存的位置（实模式）
+BOTPAK	EQU		0x00280000		; 响应地址
+DSKCAC	EQU		0x00100000
+DSKCAC0	EQU		0x00008000
 
-; BOOT_INFO相关
-CYLS	EQU		0x0ff0			; 引导扇区设置
+CYLS	EQU		0x0ff0
 LEDS	EQU		0x0ff1
-VMODE	EQU		0x0ff2			; 关于颜色的信息
-SCRNX	EQU		0x0ff4			; 分辨率X
-SCRNY	EQU		0x0ff6			; 分辨率Y
-VRAM	EQU		0x0ff8			; 图像缓冲区的起始地址
+VMODE	EQU		0x0ff2
+SCRNX	EQU		0x0ff4
+SCRNY	EQU		0x0ff6
+VRAM	EQU		0x0ff8
 
-		ORG		0xc200			;  这个的程序要被装载的内存地址
+		ORG		0xc200			;  装载地址
 
-		MOV		AL,0x13			; 显卡
+		MOV		AL,0x13			; 直接操作显卡  https://www.cnblogs.com/LexMoon/p/antz03.html
 		MOV		AH,0x00
 		INT		0x10
-		MOV		BYTE [VMODE],8	; 屏幕的模式
+		MOV		BYTE [VMODE],8	; 屏幕的模式 , B8000-BFFFF	32KB	用于文本模式显示适配器(进一步可以模仿Linux分屏模式)
 		MOV		WORD [SCRNX],320
 		MOV		WORD [SCRNY],200
 		MOV		DWORD [VRAM],0x000a0000
 
-; 通过BIOS获取指示灯状态
-
 		MOV		AH,0x02
-		INT		0x16 			; keyboard BIOS
+		INT		0x16
 		MOV		[LEDS],AL
 
 		MOV		AL,0xff
 		OUT		0x21,AL
-		NOP						; 不断执行OUT指令
+		NOP
 		OUT		0xa1,AL
 
-		CLI						; 进一步中断CPU
+		CLI
 
-; 让CPU支持1M以上内存、设置A20GATE
-
+; 进入保护模式最关键的地方，打开A20地址线 https://www.cnblogs.com/LexMoon/p/antz05.html
 		CALL	waitkbdout
 		MOV		AL,0xd1
 		OUT		0x64,AL
@@ -43,25 +39,24 @@ VRAM	EQU		0x0ff8			; 图像缓冲区的起始地址
 		OUT		0x60,AL
 		CALL	waitkbdout
 
-; 保护模式转换
+; 进入保护模式
 
-[INSTRSET "i486p"]				; 说明使用486指令
-
-		LGDT	[GDTR0]			; 设置临时GDT
+[INSTRSET "i486p"]
+		LGDT	[GDTR0]			; 设置临时GDT,之后会转移到合适位置
 		MOV		EAX,CR0
-		AND		EAX,0x7fffffff	; 使用bit31（禁用分页）
-		OR		EAX,0x00000001	; bit0到1转换（保护模式过渡）
+		AND		EAX,0x7fffffff
+		OR		EAX,0x00000001
 		MOV		CR0,EAX
 		JMP		pipelineflush
 pipelineflush:
-		MOV		AX,1*8			;  写32bit的段
+		MOV		AX,1*8
 		MOV		DS,AX
 		MOV		ES,AX
 		MOV		FS,AX
 		MOV		GS,AX
 		MOV		SS,AX
 
-; bootpack传递
+; 传递
 
 		MOV		ESI,bootpack	; 源
 		MOV		EDI,BOTPAK		; 目标
@@ -73,8 +68,6 @@ pipelineflush:
 		MOV		ECX,512/4
 		CALL	memcpy
 
-; 剩余的全部
-
 		MOV		ESI,DSKCAC0+512	; 源
 		MOV		EDI,DSKCAC+512	; 目标
 		MOV		ECX,0
@@ -82,10 +75,6 @@ pipelineflush:
 		IMUL	ECX,512*18*2/4	; 除以4得到字节数
 		SUB		ECX,512/4		; IPL偏移量
 		CALL	memcpy
-
-; 完成其余的bootpack任务
-
-; bootpack
 
 		MOV		EBX,BOTPAK
 		MOV		ECX,[EBX+16]
