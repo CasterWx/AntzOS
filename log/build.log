@@ -1,42 +1,6 @@
 make.exe[1]: Entering directory `C:/Users/13252/Desktop/AntzS/AntzOS'
 make.exe antz.img
 make.exe[2]: Entering directory `C:/Users/13252/Desktop/AntzS/AntzOS'
-nask.exe boot/mbr.asm mbr.bin mbr.lst
-nask.exe boot/asmhead.asm asmhead.bin asmhead.lst
-cc1.exe -I lib/ -Os -Wall -quiet -o main/bootpack.gas main/bootpack.c
-main/bootpack.c: In function `HariMain':
-main/bootpack.c:182: warning: implicit declaration of function `io_stihlt'
-main/bootpack.c:153: warning: unused variable `mcursor'
-main/bootpack.c:154: warning: unused variable `mx'
-main/bootpack.c:154: warning: unused variable `my'
-main/bootpack.c: In function `wait_KBC_sendready':
-main/bootpack.c:229: warning: implicit declaration of function `io_in8'
-gas2nask.exe -a main/bootpack.gas main/bootpack.nas
-nask.exe main/bootpack.nas main/bootpack.obj main/bootpack.lst
-nask.exe asmfunc/naskfunc.nas asmfunc/naskfunc.obj asmfunc/naskfunc.lst
-cc1.exe -I lib/ -Os -Wall -quiet -o windows/graphic.gas windows/graphic.c
-gas2nask.exe -a windows/graphic.gas windows/graphic.nas
-nask.exe windows/graphic.nas windows/graphic.obj windows/graphic.lst
-cc1.exe -I lib/ -Os -Wall -quiet -o lgdt/set_lgdt.gas lgdt/set_lgdt.c
-gas2nask.exe -a lgdt/set_lgdt.gas lgdt/set_lgdt.nas
-nask.exe lgdt/set_lgdt.nas lgdt/set_lgdt.obj lgdt/set_lgdt.lst
-cc1.exe -I lib/ -Os -Wall -quiet -o interrupt/int.gas interrupt/int.c
-interrupt/int.c: In function `inthandler21':
-interrupt/int.c:34: warning: implicit declaration of function `io_in8'
-interrupt/int.c:31: warning: unused variable `binfo'
-interrupt/int.c:32: warning: unused variable `s'
-gas2nask.exe -a interrupt/int.gas interrupt/int.nas
-nask.exe interrupt/int.nas interrupt/int.obj interrupt/int.lst
-cc1.exe -I lib/ -Os -Wall -quiet -o io/fifo.gas io/fifo.c
-gas2nask.exe -a io/fifo.gas io/fifo.nas
-nask.exe io/fifo.nas io/fifo.obj io/fifo.lst
-obj2bim.exe  @lib/haribote.rul out:bootpack.bim stack:3136k map:bootpack.map main/bootpack.obj asmfunc/naskfunc.obj assic/char.set windows/graphic.obj lgdt/set_lgdt.obj interrupt/int.obj io/fifo.obj
-bim2hrb.exe bootpack.bim bootpack.hrb 0
-copy /B asmhead.bin+bootpack.hrb antz.sys
-asmhead.bin
-bootpack.hrb
-已复制         1 个文件。
-edimg.exe  imgin:lib/fdimg0at.tek wbinimg src:mbr.bin len:512 from:0 to:0  copy from:antz.sys to:@: imgout:antz.img
-rm windows/graphic.gas windows/graphic.nas interrupt/int.gas interrupt/int.nas lgdt/set_lgdt.gas lgdt/set_lgdt.nas main/bootpack.gas main/bootpack.nas io/fifo.gas io/fifo.nas
+make.exe[2]: `antz.img' is up to date.
 make.exe[2]: Leaving directory `C:/Users/13252/Desktop/AntzS/AntzOS'
 make.exe[1]: Leaving directory `C:/Users/13252/Desktop/AntzS/AntzOS'
