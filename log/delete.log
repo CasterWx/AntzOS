@@ -1,0 +1,20 @@
+make.exe[1]: Entering directory `C:/Users/13252/Desktop/AntzS/AntzOS'
+del *.bin
+del *.lst
+del asmfunc\naskfunc.lst
+del asmfunc\naskfunc.obj
+del interrupt\int.lst
+del interrupt\int.obj
+del io\fifo.lst
+del io\fifo.obj
+del lgdt\set_lgdt.lst
+del lgdt\set_lgdt.obj
+del main\bootpack.lst
+del main\bootpack.obj
+del windows\graphic.lst
+del windows\graphic.obj
+del bootpack.map
+del bootpack.bim
+del bootpack.hrb
+del antz.sys
+make.exe[1]: Leaving directory `C:/Users/13252/Desktop/AntzS/AntzOS'
