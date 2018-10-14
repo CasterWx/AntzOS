@@ -11,8 +11,7 @@ int write_x = 55 ;
 int write_y = 57 ;
 
 char* replace_char(char s[40]){
-	char *chr = "" ;
-	sprintf(chr,"%s",s);
+	char *chr = "$" ;
 	if((strcmp(s,"1E")==0)||(strcmp(s,"9E")==0)){
 			chr = "a" ;
 	}else if((strcmp(s,"30")==0)||(strcmp(s,"B0")==0)){
@@ -74,15 +73,18 @@ char* replace_char(char s[40]){
 int flag = 1 ;
 
 // 指令缓存，但是因为中断响应的时间问题，终端输入速度要非常慢
-char  command[40]  ;
+char  command[100]  = "";
 void add_command(char *s)  {
-		if(strcmp(s," ")==0){
-			sprintf(command,"%s%s",command,"");
-		}else if(strcmp(s,"$")){
+/*
+if(strcmp(s," ")==0){
+	sprintf(command,"%s%s",command,"");
+}else	if(strcmp(s,"$")){
 				//忽略这种错误输入
 		}else {
-			sprintf(command,"%s%s",command,s);
-		}
+	}
+*/
+		sprintf(command,"%s%s",command,s);
+
 }
 
 void action_command(struct BOOTINFO *binfo){
@@ -101,14 +103,16 @@ void action_command(struct BOOTINFO *binfo){
 			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "Antz.version.1.1");
 		}else if(strcmp(command,"help")==0){
 			// help内容过多，显示在图形化界面区域
-
+		}else if(sizeof(command)>=1){
+				write_y += 19 ;
+				putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "Not Found");
 		}
 		// 命令缓存清除
 		sprintf(command,"%s","");
 }
 
 void key(struct BOOTINFO *binfo,char s[40]){
-	if(strcmp(s,"1C")==0){
+	if((strcmp(s,"1C")==0)||(strcmp(s,"9C")==0)){
 			action_command(binfo);
 			write_x = 58 ;
 			write_y += 19 ;
@@ -117,6 +121,7 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			sprintf(command,"%s","");
 			flag = 0 ;
 			new_pe(binfo);
+			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
 	}else if(strcmp(s,"0E")==0){
 			// 回退
 			write_x -= 8 ;
@@ -132,9 +137,9 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			write_x += 8 ;
 			// 添加响应区
 			//清除
-			boxfill8(binfo->vram, binfo->scrnx, COL8_008400 , 300	,240	,310	,250);
+			//boxfill8(binfo->vram, binfo->scrnx, COL8_008400 , 300	,240	,310	,250);
 			//打印字符 Only use debug
-			putfonts8_asc(binfo->vram, binfo->scrnx,  300,  240 ,COL8_000000, s) ;
+			//putfonts8_asc(binfo->vram, binfo->scrnx,  300,  240 ,COL8_000000, s) ;
 	}
 	if(write_x>148){
 		write_x = 58 ;
@@ -143,6 +148,7 @@ void key(struct BOOTINFO *binfo,char s[40]){
 	}
 	if(write_y>180){
  		new_pe(binfo);
+		putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
 	}
 
 }
@@ -155,7 +161,7 @@ void HariMain(void)
 
 	init_gdtidt();
 	init_pic();
-	io_sti(); /* IDT/PIC的初始化已经完成，于是开放CPU的中断 */
+	io_sti(); /* PIC的初始化已经完成*/
 
 	fifo8_init(&keyfifo, 32, keybuf);
 	fifo8_init(&mousefifo, 128, mousebuf);
@@ -212,7 +218,8 @@ void new_pe(struct BOOTINFO *binfo){
 	putfonts8_asc(binfo->vram, binfo->scrnx,  0,  0, COL8_FFFFFF, "Terminal-Antz");
 	putfonts8_asc(binfo->vram, binfo->scrnx,  0,  0, COL8_000000, "Terminal-Antz");
 	putfonts8_asc(binfo->vram, binfo->scrnx,  107,  0, COL8_000000, "|-|o|x|");
-	putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
+	// 此处保留此输出，交给调用者自己
+	//	putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
 }
 
 #define PORT_KEYDAT				0x0060
@@ -224,7 +231,7 @@ void new_pe(struct BOOTINFO *binfo){
 
 void wait_KBC_sendready(void)
 {
-	/* 等待键盘控制电路准备完毕 */
+	/* 等待键盘准备 */
 	for (;;) {
 		if ((io_in8(PORT_KEYSTA) & KEYSTA_SEND_NOTREADY) == 0) {
 			break;
@@ -235,7 +242,7 @@ void wait_KBC_sendready(void)
 
 void init_keyboard(void)
 {
-	/* 初始化键盘控制电路 */
+	/* 初始化键盘 */
 	wait_KBC_sendready();
 	io_out8(PORT_KEYCMD, KEYCMD_WRITE_MODE);
 	wait_KBC_sendready();
@@ -252,5 +259,5 @@ void enable_mouse(void)
 	io_out8(PORT_KEYCMD, KEYCMD_SENDTO_MOUSE);
 	wait_KBC_sendready();
 	io_out8(PORT_KEYDAT, MOUSECMD_ENABLE);
-	return; /* 顺利的话，键盘控制器会返回ACK(0xfa) */
+	return;
 }
