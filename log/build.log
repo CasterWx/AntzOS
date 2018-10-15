@@ -1,9 +1,6 @@
 make.exe[1]: Entering directory `C:/Users/13252/Desktop/AntzS/AntzOS'
 make.exe antz.img
 make.exe[2]: Entering directory `C:/Users/13252/Desktop/AntzS/AntzOS'
-<<<<<<< HEAD
-make.exe[2]: `antz.img' is up to date.
-=======
 nask.exe boot/mbr.asm mbr.bin mbr.lst
 nask.exe boot/asmhead.asm asmhead.bin asmhead.lst
 cc1.exe -I lib/ -Os -Wall -quiet -o main/bootpack.gas main/bootpack.c
@@ -41,6 +38,5 @@ bootpack.hrb
 已复制         1 个文件。
 edimg.exe  imgin:lib/fdimg0at.tek wbinimg src:mbr.bin len:512 from:0 to:0  copy from:antz.sys to:@: imgout:antz.img
 rm windows/graphic.gas windows/graphic.nas interrupt/int.gas interrupt/int.nas lgdt/set_lgdt.gas lgdt/set_lgdt.nas main/bootpack.gas main/bootpack.nas io/fifo.gas io/fifo.nas
->>>>>>> 532eaf25fba24618a12ea439b2244bd3bb2f128a
 make.exe[2]: Leaving directory `C:/Users/13252/Desktop/AntzS/AntzOS'
 make.exe[1]: Leaving directory `C:/Users/13252/Desktop/AntzS/AntzOS'
