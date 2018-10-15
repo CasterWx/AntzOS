@@ -69,7 +69,7 @@ clean :
 
 	-$(DEL) windows\graphic.lst
 	-$(DEL) windows\graphic.obj
- 
+
 	-$(DEL) bootpack.map
 	-$(DEL) bootpack.bim
 	-$(DEL) bootpack.hrb
