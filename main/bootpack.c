@@ -149,7 +149,7 @@ char* replace_char(char s[40]){
 }
 
 // int flag = 1 ;
-
+int x_move = 0 ;
 // 指令缓存，但是因为中断响应的时间问题，终端输入速度要非常慢
 char  command[100]  = "";
 int command_index = 0 ;
@@ -176,7 +176,14 @@ void action_command(struct BOOTINFO *binfo){
 			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS in 2018");
 		}else if(strcmp(command,"exit")==0){
 			// 关机
-				
+		}else if(strcmp(command,"vim")==0){
+			// vim edit
+			// 重置右半边屏幕
+			boxfill8(binfo->vram,binfo->scrnx,COL8_000000, 160,0,320-3,260-3);
+			putfonts8_asc(binfo->vram,binfo->scrnx,162,2,COL8_00FF00,"Vim :");
+			x_move = 104 ;
+			write_x = 58 ;
+			write_y = 2 ;
 		}else if(strcmp(command,"cls")==0){
 			// flag = 0 ;
 			new_pe(binfo);
@@ -205,14 +212,23 @@ void action_command(struct BOOTINFO *binfo){
 }
 
 void key(struct BOOTINFO *binfo,char s[40]){
-	if((strcmp(s,"1C")==0)){
-			action_command(binfo);
-			write_x = 58 ;
-			write_y += 19 ;
-			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
+	if((strcmp(s,"1C")==0)){  // enter
+			if(x_move!=0){
+				// 右边
+				write_x = 58 ;
+				write_y += 19 ;
+			}else {
+				// 左边
+				action_command(binfo);
+				write_x = 58 ;
+				write_y += 19 ;
+				if (x_move==0)
+					putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
+			}
 	}else if((strcmp(s,"3B")==0)){  //关于F1的响应中断
 			sprintf(command,"%s","");
-			// flag = 0 ;
+			// flag = 0
+			x_move = 0 ;
 			new_pe(binfo);
 			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
 	}else if(strcmp(s,"0E")==0){
@@ -220,7 +236,7 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			int len = strlen(command);
 			command[len - 1] = '\0';
 			write_x -= 8 ;
-			boxfill8(binfo->vram, binfo->scrnx , COL8_000000,  write_x,     write_y,     write_x+19, write_y+19);
+			boxfill8(binfo->vram, binfo->scrnx , COL8_000000,  x_move + write_x,     write_y,     x_move+write_x+19, write_y+19);
 			if(write_x<=55) {
 				write_x = 146 ;
 				write_y -= 19 ;
@@ -231,7 +247,7 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			if(strcmp(in,"")==0){
 
 			}else {
-				putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, in);
+				putfonts8_asc(binfo->vram, binfo->scrnx,  x_move + write_x,  write_y, COL8_FFFFFF, in);
 				add_command(in);
 				write_x += 8 ;
 			}
@@ -241,14 +257,29 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			//打印字符 Only use debug
 			//putfonts8_asc(binfo->vram, binfo->scrnx,  300,  240 ,COL8_000000, s) ;
 	}
-	if(write_x>148){
-		write_x = 4 ;
-		write_y += 19 ;
-		//putfonts8_asc(binfo->vram, binfo->scrnx, 4, 57, COL8_FFFFFF, "AntzOS>");
-	}
-	if(write_y>180){
- 		new_pe(binfo);
-		putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
+	if (x_move==0){
+		// 左边
+		if(write_x>148){
+			write_x = 4 ;
+			write_y += 19 ;
+			//putfonts8_asc(binfo->vram, binfo->scrnx, 4, 57, COL8_FFFFFF, "AntzOS>");
+		}
+		if(write_y>180){
+	 		new_pe(binfo);
+			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
+		}
+	}else if(x_move!=0){
+		// vim模式
+		if(write_x>317-x_move){
+			write_x = 58 ;
+			write_y += 19 ;
+		}
+		if(write_y>180){
+			write_y = 15 ;
+			write_x = 58 ;
+			boxfill8(binfo->vram,binfo->scrnx,COL8_000000, 160,0,320-3,260-3);
+			putfonts8_asc(binfo->vram,binfo->scrnx,162,2,COL8_00FF00,"Vim :");
+		}
 	}
 
 }
