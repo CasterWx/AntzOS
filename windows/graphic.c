@@ -56,7 +56,7 @@ void boxfill8(unsigned char *vram, int xsize, unsigned char c, int x0, int y0, i
 
 void init_screen8(char *vram, int x, int y)
 {
- 	boxfill8(vram, x, COL8_00FFFF,  0,     0,      x, 		y);
+ 	boxfill8(vram, x, COL8_FFFFFF,  0,     0,      x, 		y);
 	boxfill8(vram, x, COL8_C6C6C6,  0,     0,     x/2,   y);
 	boxfill8(vram, x, COL8_000000,  3,     15,     x/2-3, y-3);
 
