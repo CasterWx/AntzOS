@@ -7,73 +7,152 @@ void enable_mouse(void);
 void init_keyboard(void);
 void new_pe(struct BOOTINFO *binfo);
 
-int write_x = 55 ;
+int write_x = 58 ;
 int write_y = 57 ;
 
 char* replace_char(char s[40]){
-	char *chr = "$" ;
-	if((strcmp(s,"1E")==0)||(strcmp(s,"9E")==0)){
+	char *chr = "" ;
+	if (strcmp(s,"9E")==0){
+			chr = "" ;
+	}else if(strcmp(s,"B0")==0){
+			chr = "" ;
+	}else if(strcmp(s,"AE")==0){
+			chr = "" ;
+	}else if(strcmp(s,"A0")==0){
+			chr = "" ;
+	}else if(strcmp(s,"92")==0){
+			chr = "" ;
+	}else if(strcmp(s,"A1")==0){
+			chr = "" ;
+	}else if(strcmp(s,"A2")==0){
+			chr = "" ;
+	}else if(strcmp(s,"A3")==0){
+			chr = "" ;
+	}else if(strcmp(s,"97")==0){
+			chr = "" ;
+	}else if(strcmp(s,"A4")==0){
+			chr = "" ;
+	}else if(strcmp(s,"A5")==0){
+			chr = "" ;
+	}else if(strcmp(s,"A6")==0){
+			chr = "" ;
+	}else if(strcmp(s,"B2")==0){
+			chr = "" ;
+	}else if(strcmp(s,"B1")==0){
+			chr = "" ;
+	}else if(strcmp(s,"98")==0){
+			chr = "" ;
+	}else if(strcmp(s,"99")==0){
+			chr = "" ;
+	}else if(strcmp(s,"90")==0){
+			chr = "" ;
+	}else if(strcmp(s,"93")==0){
+			chr = "" ;
+	}else if(strcmp(s,"9F")==0){
+			chr = "" ;
+	}else if(strcmp(s,"94")==0){
+			chr = "" ;
+	}else if(strcmp(s,"96")==0){
+			chr = "" ;
+	}else if(strcmp(s,"AF")==0){
+			chr = "" ;
+	}else if(strcmp(s,"91")==0){
+			chr = "" ;
+	}else if(strcmp(s,"AD")==0){
+			chr = "" ;
+	}else if(strcmp(s,"95")==0){
+			chr = "" ;
+	}else if(strcmp(s,"AC")==0){
+			chr = "" ;
+	}else if(strcmp(s,"B9")==0){
+			chr = "" ;
+	}else	if((strcmp(s,"A7")==0)){
+			chr = "" ;
+	}else	if((strcmp(s,"B4")==0)){
+			chr = "" ;
+	}else	if((strcmp(s,"B3")==0)){
+			chr = "" ;
+	}else	if((strcmp(s,"9A")==0)){
+			chr = "" ;
+	}else	if((strcmp(s,"9B")==0)){
+			chr = "" ;
+	}else	if((strcmp(s,"1A")==0)){
+			chr = "[" ;
+	}else	if((strcmp(s,"1B")==0)){
+			chr = "]" ;
+	}else	if((strcmp(s,"33")==0)){
+			chr = "," ;
+	}else	if((strcmp(s,"27")==0)){
+			chr = ";" ;
+	}else	if((strcmp(s,"34")==0)){
+			chr = "." ;
+	}else	if((strcmp(s,"1E")==0)){
 			chr = "a" ;
-	}else if((strcmp(s,"30")==0)||(strcmp(s,"B0")==0)){
+	}else if((strcmp(s,"30")==0)){
 			chr = "b" ;
-	}else if((strcmp(s,"2E")==0)||(strcmp(s,"AE")==0)){
+	}else if((strcmp(s,"2E")==0)){
 			chr = "c" ;
-	}else if((strcmp(s,"20")==0)||(strcmp(s,"A0")==0)){
+	}else if((strcmp(s,"20")==0)){
 			chr = "d" ;
-	}else if((strcmp(s,"12")==0)||(strcmp(s,"92")==0)){
+	}else if((strcmp(s,"12")==0)){
 			chr = "e" ;
-	}else if((strcmp(s,"21")==0)||(strcmp(s,"A1")==0)){
+	}else if((strcmp(s,"21")==0)){
 			chr = "f" ;
-	}else if((strcmp(s,"22")==0)||(strcmp(s,"A2")==0)){
+	}else if((strcmp(s,"22")==0)){
 			chr = "g" ;
-	}else if((strcmp(s,"23")==0)||(strcmp(s,"A3")==0)){
+	}else if((strcmp(s,"23")==0)){
 			chr = "h" ;
-	}else if((strcmp(s,"17")==0)||(strcmp(s,"97")==0)){
+	}else if((strcmp(s,"17")==0)){
 		chr = "i" ;
-	}else if((strcmp(s,"24")==0)||(strcmp(s,"A4")==0)){
+	}else if((strcmp(s,"24")==0)){
 		chr = "j" ;
-	}else if((strcmp(s,"25")==0)||(strcmp(s,"A5")==0)){
+	}else if((strcmp(s,"25")==0)){
 		chr = "k" ;
-	}else if((strcmp(s,"26")==0)||(strcmp(s,"A6")==0)){
+	}else if((strcmp(s,"26")==0)){
 		chr = "l" ;
-	}else if((strcmp(s,"32")==0)||(strcmp(s,"B2")==0)){
+	}else if((strcmp(s,"32")==0)){
 		chr = "m" ;
-	}else if((strcmp(s,"31")==0)||(strcmp(s,"B1")==0)){
+	}else if((strcmp(s,"31")==0)){
 		chr = "n" ;
-	}else if((strcmp(s,"18")==0)||(strcmp(s,"98")==0)){
+	}else if((strcmp(s,"18")==0)){
 		chr = "o" ;
-	}else if((strcmp(s,"19")==0)||(strcmp(s,"99")==0)){
+	}else if((strcmp(s,"19")==0)){
 		chr = "p" ;
-	}else if((strcmp(s,"10")==0)||(strcmp(s,"90")==0)){
+	}else if((strcmp(s,"10")==0)){
 		chr = "q" ;
-	}else if((strcmp(s,"13")==0)||(strcmp(s,"93")==0)){
+	}else if((strcmp(s,"13")==0)){
 		chr = "r" ;
-	}else if((strcmp(s,"1F")==0)||(strcmp(s,"9F")==0)){
+	}else if((strcmp(s,"1F")==0)){
 		chr = "s" ;
-	}else if((strcmp(s,"14")==0)||(strcmp(s,"94")==0)){
+	}else if((strcmp(s,"14")==0)){
 		chr = "t" ;
-	}else if((strcmp(s,"16")==0)||(strcmp(s,"96")==0)){
+	}else if((strcmp(s,"16")==0)){
 		chr = "u" ;
-	}else if((strcmp(s,"2F")==0)||(strcmp(s,"AF")==0)){
+	}else if((strcmp(s,"2F")==0)){
 		chr = "v" ;
-	}else if((strcmp(s,"11")==0)||(strcmp(s,"91")==0)){
+	}else if((strcmp(s,"11")==0)){
 		chr = "w" ;
-	}else if((strcmp(s,"2D")==0)||(strcmp(s,"AD")==0)){
+	}else if((strcmp(s,"2D")==0)){
 		chr = "x" ;
-	}else if((strcmp(s,"15")==0)||(strcmp(s,"95")==0)){
+	}else if((strcmp(s,"15")==0)){
 		chr = "y" ;
-	}else if((strcmp(s,"2C")==0)||(strcmp(s,"AC")==0)){
+	}else if((strcmp(s,"2C")==0)){
 		chr = "z" ;
-	}else if((strcmp(s,"39")==0)||(strcmp(s,"B9")==0)){
+	}else if((strcmp(s,"39")==0)){
 		chr = " " ;
+	}else if(strcmp(s,"9C")==0){ // 回车的弹起中断
+		chr = "" ;
+	}else if(strcmp(s,"BB")==0){
+		chr = "" ;
 	}
 	return chr ;
 }
 
-int flag = 1 ;
+// int flag = 1 ;
 
 // 指令缓存，但是因为中断响应的时间问题，终端输入速度要非常慢
 char  command[100]  = "";
+int command_index = 0 ;
 void add_command(char *s)  {
 /*
 if(strcmp(s," ")==0){
@@ -84,7 +163,7 @@ if(strcmp(s," ")==0){
 	}
 */
 		sprintf(command,"%s%s",command,s);
-
+		command_index++ ;
 }
 
 void action_command(struct BOOTINFO *binfo){
@@ -95,14 +174,28 @@ void action_command(struct BOOTINFO *binfo){
 			// get new data;
 			write_y += 19 ;
 			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS in 2018");
+		}else if(strcmp(command,"exit")==0){
+			// 关机
+				
 		}else if(strcmp(command,"cls")==0){
-			flag = 0 ;
+			// flag = 0 ;
 			new_pe(binfo);
+			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "New PE:");
 		}else if(strcmp(command,"version")==0){
 			write_y += 19 ;
 			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "Antz.version.1.1");
 		}else if(strcmp(command,"help")==0){
 			// help内容过多，显示在图形化界面区域
+			boxfill8(binfo->vram, binfo->scrnx , COL8_000000,  160,     0,     320-3, 260-3);
+			putfonts8_asc(binfo->vram, binfo->scrnx, 162, 2, COL8_00FF00,  "  He was stabbed in"); //21
+			putfonts8_asc(binfo->vram, binfo->scrnx, 161, 21, COL8_00FF00, "the throat. He died");
+			putfonts8_asc(binfo->vram, binfo->scrnx, 161, 40, COL8_00FF00, "almost instantly.");
+			putfonts8_asc(binfo->vram, binfo->scrnx, 161, 59, COL8_00FF00, "  Although I hadn't");
+			putfonts8_asc(binfo->vram, binfo->scrnx, 161, 78, COL8_00FF00, "seen him in more th");
+			putfonts8_asc(binfo->vram, binfo->scrnx, 161, 97, COL8_00FF00, "an ten years,  I kn");
+			putfonts8_asc(binfo->vram, binfo->scrnx, 161, 116, COL8_00FF00,"ow I will miss him");
+			putfonts8_asc(binfo->vram, binfo->scrnx, 161, 135, COL8_00FF00, "forever.");
+			putfonts8_asc(binfo->vram, binfo->scrnx, 220, 160, COL8_00FF00, "AntzOs-10/16");
 		}else if(sizeof(command)>=1){
 				write_y += 19 ;
 				putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "Not Found");
@@ -112,29 +205,36 @@ void action_command(struct BOOTINFO *binfo){
 }
 
 void key(struct BOOTINFO *binfo,char s[40]){
-	if((strcmp(s,"1C")==0)||(strcmp(s,"9C")==0)){
+	if((strcmp(s,"1C")==0)){
 			action_command(binfo);
 			write_x = 58 ;
 			write_y += 19 ;
 			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
-	}else if((strcmp(s,"3B")==0)||(strcmp(s,"BB")==0)){  //关于F1的响应中断
+	}else if((strcmp(s,"3B")==0)){  //关于F1的响应中断
 			sprintf(command,"%s","");
-			flag = 0 ;
+			// flag = 0 ;
 			new_pe(binfo);
 			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
 	}else if(strcmp(s,"0E")==0){
 			// 回退
+			int len = strlen(command);
+			command[len - 1] = '\0';
 			write_x -= 8 ;
 			boxfill8(binfo->vram, binfo->scrnx , COL8_000000,  write_x,     write_y,     write_x+19, write_y+19);
-			if(write_x<=58){
+			if(write_x<=55) {
 				write_x = 146 ;
 				write_y -= 19 ;
 			}
 	}else {
 			//putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, s);
-			putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, replace_char(s));
-			add_command(replace_char(s));
-			write_x += 8 ;
+			char *in = replace_char(s) ;
+			if(strcmp(in,"")==0){
+
+			}else {
+				putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, in);
+				add_command(in);
+				write_x += 8 ;
+			}
 			// 添加响应区
 			//清除
 			//boxfill8(binfo->vram, binfo->scrnx, COL8_008400 , 300	,240	,310	,250);
@@ -142,7 +242,7 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			//putfonts8_asc(binfo->vram, binfo->scrnx,  300,  240 ,COL8_000000, s) ;
 	}
 	if(write_x>148){
-		write_x = 58 ;
+		write_x = 4 ;
 		write_y += 19 ;
 		//putfonts8_asc(binfo->vram, binfo->scrnx, 4, 57, COL8_FFFFFF, "AntzOS>");
 	}
@@ -194,14 +294,14 @@ void HariMain(void)
 				sprintf(s, "%02X", i);
 				//boxfill8(binfo->vram, binfo->scrnx, COL8_008484,  0, 16, 15, 31);
 				//putfonts8_asc(binfo->vram, binfo->scrnx, 0, 16, COL8_FFFFFF, s);
-				if (flag){
+				// if (flag){
 					key(binfo,s);
-				}
-				if(flag==1){
-					flag = 0 ;
-				}else {
-					flag = 1 ;
-				}
+				// }
+				// if(flag==1){
+				// 	flag = 0 ;
+				// }else {
+				// 	flag = 1 ;
+				// }
 			} else if (fifo8_status(&mousefifo) != 0) {
 				i = fifo8_get(&mousefifo);
 				io_sti();
