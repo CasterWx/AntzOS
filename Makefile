@@ -45,9 +45,9 @@ img :
 	$(MAKE) antz.img
 
 run :
-	$(MAKE) img > log/build.log
-	$(MAKE) clean > log/delete.log
-
+	$(MAKE) img
+	$(MAKE) clean
+	
 clean :
 	-$(DEL) *.bin
 	-$(DEL) *.lst
