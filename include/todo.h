@@ -1,3 +1,6 @@
+/* thun.c */
+void to_printf(void);
+
 /* asmhead.nas */
 struct BOOTINFO { /* 0x0ff0-0x0fff */
 	char cyls; /* 启动区读磁盘读到此为止 */
