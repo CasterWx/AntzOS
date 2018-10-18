@@ -1,12 +1,12 @@
-#include "todo.h"
+#include <todo.h>
 #include <stdio.h>
 #include <string.h>
 
 extern struct FIFO8 keyfifo, mousefifo;
 void enable_mouse(void);
 void init_keyboard(void);
-void new_pe(struct BOOTINFO *binfo);
 
+void new_pe(struct BOOTINFO *binfo);
 int write_x = 58 ;
 int write_y = 57 ;
 
@@ -184,13 +184,15 @@ void action_command(struct BOOTINFO *binfo){
 			x_move = 104 ;
 			write_x = 58 ;
 			write_y = 2 ;
+		}else if(strcmp(command,"playgame")==0){
+			to_printf() ;
 		}else if(strcmp(command,"cls")==0){
 			// flag = 0 ;
 			new_pe(binfo);
 			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "New PE:");
 		}else if(strcmp(command,"version")==0){
 			write_y += 19 ;
-			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "Antz.version.1.1");
+			putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "Antz.version.2.0");
 		}else if(strcmp(command,"help")==0){
 			// help内容过多，显示在图形化界面区域
 			boxfill8(binfo->vram, binfo->scrnx , COL8_000000,  160,     0,     320-3, 260-3);
@@ -225,6 +227,17 @@ void key(struct BOOTINFO *binfo,char s[40]){
 				if (x_move==0)
 					putfonts8_asc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
 			}
+	}else if((strcmp(s,"0F")==0)){
+		// 关于tab 0F 8F
+		putfonts8_asc(binfo->vram, binfo->scrnx, x_move+write_x, write_y, COL8_FFFFFF, " ");
+		write_x += 8 ;
+		border(binfo);
+		putfonts8_asc(binfo->vram, binfo->scrnx, x_move+write_x, write_y, COL8_FFFFFF, " ");
+		write_x += 8 ;
+		border(binfo);
+		putfonts8_asc(binfo->vram, binfo->scrnx, x_move+write_x, write_y, COL8_FFFFFF, " ");
+		write_x += 8 ;
+		border(binfo);
 	}else if((strcmp(s,"3B")==0)){  //关于F1的响应中断
 			sprintf(command,"%s","");
 			// flag = 0
@@ -237,10 +250,20 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			command[len - 1] = '\0';
 			write_x -= 8 ;
 			boxfill8(binfo->vram, binfo->scrnx , COL8_000000,  x_move + write_x,     write_y,     x_move+write_x+19, write_y+19);
-			if(write_x<=55) {
-				write_x = 146 ;
-				write_y -= 19 ;
+			if(x_move!=0){
+   				// 正在右边界
+					if(write_x<=60) {
+						write_x = 202 ;
+						write_y -= 19 ;
+					}
+			}else if(x_move==0){
+					// 正在左边界
+					if(write_x<=4) {
+						write_x = 146 ;
+						write_y -= 19 ;
+					}
 			}
+
 	}else {
 			//putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, s);
 			char *in = replace_char(s) ;
@@ -257,6 +280,10 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			//打印字符 Only use debug
 			//putfonts8_asc(binfo->vram, binfo->scrnx,  300,  240 ,COL8_000000, s) ;
 	}
+	border(binfo);
+}
+// 边界处理
+void border(struct BOOTINFO *binfo){
 	if (x_move==0){
 		// 左边
 		if(write_x>148){
@@ -270,7 +297,7 @@ void key(struct BOOTINFO *binfo,char s[40]){
 		}
 	}else if(x_move!=0){
 		// vim模式
-		if(write_x>317-x_move){
+		if(write_x>310-x_move){
 			write_x = 58 ;
 			write_y += 19 ;
 		}
@@ -281,9 +308,7 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			putfonts8_asc(binfo->vram,binfo->scrnx,162,2,COL8_00FF00,"Vim :");
 		}
 	}
-
 }
-
 void HariMain(void)
 {
 	struct BOOTINFO *binfo = (struct BOOTINFO *) ADR_BOOTINFO;
