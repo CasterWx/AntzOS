@@ -1,9 +1,9 @@
-#include "todo.h"
+#include <todo.h>
 
 #define FLAGS_OVERRUN		0x0001
 
 /*
-	只需要先加载出一段缓冲区供之后使用即可 
+	只需要先加载出一段缓冲区供之后使用即可
 */
 void fifo8_init(struct FIFO8 *fifo, int size, unsigned char *buf)
 /* 初始化FIFO缓冲区 */
