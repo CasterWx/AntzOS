@@ -1,11 +1,11 @@
-#include "todo.h"
+#include <todo.h>
 
 void init_pic(void)
 /* PIC初始化 */
 {
 	 /* 禁止中断 */
 	io_out8(PIC0_IMR,  0xff  );
-	io_out8(PIC1_IMR,  0xff  );  
+	io_out8(PIC1_IMR,  0xff  );
 	io_out8(PIC0_ICW1, 0x11  );
 	io_out8(PIC0_ICW2, 0x20  );
 	io_out8(PIC0_ICW3, 1 << 2);
