@@ -1,5 +1,8 @@
 #include <todo.h>
+/*
+user proc
 
+*/
 void init_pic(void)
 /* PIC初始化 */
 {
