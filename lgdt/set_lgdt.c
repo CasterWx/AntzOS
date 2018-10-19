@@ -1,4 +1,4 @@
-//	GDT
+//	lGDT
 #include <todo.h>
 //   https://www.cnblogs.com/LexMoon/p/antz05.html
 /*
