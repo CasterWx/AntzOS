@@ -2,6 +2,7 @@
 #include <todo.h>
 //   https://www.cnblogs.com/LexMoon/p/antz05.html
 /*
+	mbr
 	GDT中段基址和段界限不是连续的！！！
 	为了兼容当时第一代GDT引入时的土豪机。
 	自处只做加载与基础寻址，不处理内存段或门的子类型的响应。
