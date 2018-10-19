@@ -1,4 +1,4 @@
-# 自制操作系统Antz day12——承上启下
+# 自制操作系统Antz
 > 我已经规范了系统代码风格，类似于按照linux分包，把各部分功能区分开了
 ### [Antz系统更新地址](https://www.cnblogs.com/LexMoon/category/1262287.html)
 
