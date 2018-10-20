@@ -44,7 +44,8 @@ void set_palette(int start, int end, unsigned char *rgb)
 	return;
 }
 
-void boxfill8(unsigned char *vram, int xsize, unsigned char c, int x0, int y0, int x1, int y1)
+// 区域绘制
+void print_area(unsigned char *vram, int xsize, unsigned char c, int x0, int y0, int x1, int y1)
 {
 	int x, y;
 	for (y = y0; y <= y1; y++) {
@@ -54,32 +55,33 @@ void boxfill8(unsigned char *vram, int xsize, unsigned char c, int x0, int y0, i
 	return;
 }
 
+// 初始界面
 void init_screen8(char *vram, int x, int y)
 {
- 	boxfill8(vram, x, COL8_FFFFFF,  0,     0,      x, 		y);
-	boxfill8(vram, x, COL8_C6C6C6,  0,     0,     x/2,   y);
-	boxfill8(vram, x, COL8_000000,  3,     15,     x/2-3, y-3);
+ 	print_area(vram, x, COL8_FFFFFF,  0,     0,      x, 		y);
+	print_area(vram, x, COL8_C6C6C6,  0,     0,     x/2,   y);
+	print_area(vram, x, COL8_000000,  3,     15,     x/2-3, y-3);
 
-	boxfill8(vram, x, COL8_008400,  165	,     30,     215, 	40);
-	boxfill8(vram, x, COL8_008400,  265	,     30,     315, 	40);
+	print_area(vram, x, COL8_008400,  165	,     30,     215, 	40);
+	print_area(vram, x, COL8_008400,  265	,     30,     315, 	40);
 
-	boxfill8(vram, x, COL8_008400,  190	,     60,     200, 	70);
-	boxfill8(vram, x, COL8_008400,  280	,     60,     290, 	70);
+	print_area(vram, x, COL8_008400,  190	,     60,     200, 	70);
+	print_area(vram, x, COL8_008400,  280	,     60,     290, 	70);
 
-	boxfill8(vram, x, COL8_008400,  235	,     65,     245, 	100);
+	print_area(vram, x, COL8_008400,  235	,     65,     245, 	100);
 
-	boxfill8(vram, x, COL8_008400,  235-15	,     65+40,     245-15, 	85+30);
-	boxfill8(vram, x, COL8_008400,  235	,     65+40,     245, 	85+30);
-	boxfill8(vram, x, COL8_008400,  235+15	,     65+40,     245+15, 	85+30);
+	print_area(vram, x, COL8_008400,  235-15	,     65+40,     245-15, 	85+30);
+	print_area(vram, x, COL8_008400,  235	,     65+40,     245, 	85+30);
+	print_area(vram, x, COL8_008400,  235+15	,     65+40,     245+15, 	85+30);
 
-	boxfill8(vram, x, COL8_008400,  200	,     130,     280, 	140);
-	boxfill8(vram, x, COL8_008400,  200	,     130,     210, 	160);
-	boxfill8(vram, x, COL8_008400,  270	,     130,     280, 	160);
-	boxfill8(vram, x, COL8_008400,  200	,     150,     280, 	160);
+	print_area(vram, x, COL8_008400,  200	,     130,     280, 	140);
+	print_area(vram, x, COL8_008400,  200	,     130,     210, 	160);
+	print_area(vram, x, COL8_008400,  270	,     130,     280, 	160);
+	print_area(vram, x, COL8_008400,  200	,     150,     280, 	160);
 	return;
 }
 
-void putfont8(char *vram, int xsize, int x, int y, char c, char *font)
+void print_font(char *vram, int xsize, int x, int y, char c, char *font)
 {
 	int i;
 	char *p, d /* data */;
@@ -98,12 +100,12 @@ void putfont8(char *vram, int xsize, int x, int y, char c, char *font)
 	return;
 }
 
-void putfonts8_asc(char *vram, int xsize, int x, int y, char c, unsigned char *s)
+void print_string(char *vram, int xsize, int x, int y, char c, unsigned char *s)
 {
 	extern char hankaku[4096];
 	/* C语言中，字符串都是以0x00结尾 */
 	for (; *s != 0x00; s++) {
-		putfont8(vram, xsize, x, y, c, hankaku + *s * 16);
+		print_font(vram, xsize, x, y, c, hankaku + *s * 16);
 		x += 8;
 	}
 	return;
