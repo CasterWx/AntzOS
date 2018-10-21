@@ -111,8 +111,7 @@ void print_string(char *vram, int xsize, int x, int y, char c, unsigned char *s)
 	return;
 }
 
-void init_mouse_cursor8(char *mouse, char bc)
-/* 鼠标的数据准备（16x16） */
+void init_mouse_cursor8(char *mouse, char bc) 
 {
 	static char cursor[16][16] = {
 		"****************",
