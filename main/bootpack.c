@@ -165,7 +165,9 @@ if(strcmp(s," ")==0){
 		sprintf(command,"%s%s",command,s);
 		command_index++ ;
 }
-
+// vim之前保存x，y
+int last_x = 0 ;
+int last_y = 0 ;
 void action_command(struct BOOTINFO *binfo){
 		// action command
 		// ls
@@ -174,14 +176,22 @@ void action_command(struct BOOTINFO *binfo){
 			// get new data;
 			write_y += 19 ;
 			print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS in 2018");
-		}else if(strcmp(command,"exit")==0){
-			// 关机
+		}else if(strcmp(command,"reset")==0){
+			// 重置
+			write_x = 58 ;
+			write_y = 19 ;
+			// 右边并没有保存
+			init_screen8(binfo->vram, binfo->scrnx, binfo->scrny);
+			print_string(binfo->vram, binfo->scrnx,  0,  0, COL8_FFFFFF, "Terminal-Antz");
+			print_string(binfo->vram, binfo->scrnx,  0,  0, COL8_000000, "Terminal-Antz");
+			print_string(binfo->vram, binfo->scrnx,  107,  0, COL8_000000, "|-|o|x|");
 		}else if(strcmp(command,"vim")==0){
 			// vim edit
 			// 重置右半边屏幕
 			print_area(binfo->vram,binfo->scrnx,COL8_000000, 160,0,320-3,260-3);
 			print_string(binfo->vram,binfo->scrnx,162,2,COL8_00FF00,"Vim :");
 			x_move = 104 ;
+			last_y = write_y + 19 ;
 			write_x = 58 ;
 			write_y = 2 ;
 		}else if(strcmp(command,"playgame")==0){
@@ -227,6 +237,11 @@ void key(struct BOOTINFO *binfo,char s[40]){
 				if (x_move==0)
 					print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
 			}
+	}else if((strcmp(s,"01")==0)){
+		x_move = 0 ;
+		write_y = last_y ;
+		print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
+		write_x = 58 ;
 	}else if((strcmp(s,"0F")==0)){
 		// 关于tab 0F 8F
 		print_string(binfo->vram, binfo->scrnx, x_move+write_x, write_y, COL8_FFFFFF, " ");
@@ -370,7 +385,7 @@ void new_pe(struct BOOTINFO *binfo){
 	write_x = 58 ;
 	write_y = 19 ;
 	// 右边并没有保存
-	init_screen8(binfo->vram, binfo->scrnx, binfo->scrny);
+	print_area(binfo->vram, binfo->scrnx, COL8_000000,  3,     15,     155 ,   260);
 	print_string(binfo->vram, binfo->scrnx,  0,  0, COL8_FFFFFF, "Terminal-Antz");
 	print_string(binfo->vram, binfo->scrnx,  0,  0, COL8_000000, "Terminal-Antz");
 	print_string(binfo->vram, binfo->scrnx,  107,  0, COL8_000000, "|-|o|x|");
