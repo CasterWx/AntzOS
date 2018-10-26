@@ -3,7 +3,6 @@
 #include <string.h>
 
 extern struct FIFO8 keyfifo, mousefifo;
-void enable_mouse(void);
 void init_keyboard(void);
 
 void new_pe(struct BOOTINFO *binfo);
@@ -206,15 +205,15 @@ void action_command(struct BOOTINFO *binfo){
 		}else if(strcmp(command,"help")==0){
 			// help内容过多，显示在图形化界面区域
 			print_area(binfo->vram, binfo->scrnx , COL8_000000,  160,     0,     320-3, 260-3);
-			print_string(binfo->vram, binfo->scrnx, 162, 2, COL8_00FF00,  "  He was stabbed in"); //21
-			print_string(binfo->vram, binfo->scrnx, 161, 21, COL8_00FF00, "the throat. He died");
-			print_string(binfo->vram, binfo->scrnx, 161, 40, COL8_00FF00, "almost instantly.");
-			print_string(binfo->vram, binfo->scrnx, 161, 59, COL8_00FF00, "  Although I hadn't");
-			print_string(binfo->vram, binfo->scrnx, 161, 78, COL8_00FF00, "seen him in more th");
-			print_string(binfo->vram, binfo->scrnx, 161, 97, COL8_00FF00, "an ten years,  I kn");
-			print_string(binfo->vram, binfo->scrnx, 161, 116, COL8_00FF00,"ow I will miss him");
-			print_string(binfo->vram, binfo->scrnx, 161, 135, COL8_00FF00, "forever.");
-			print_string(binfo->vram, binfo->scrnx, 220, 160, COL8_00FF00, "AntzOs-10/16");
+			print_string(binfo->vram, binfo->scrnx, 162, 2+19, COL8_00FF00,  "  He was stabbed in"); //21
+			print_string(binfo->vram, binfo->scrnx, 161, 21+19, COL8_00FF00, "the throat. He died");
+			print_string(binfo->vram, binfo->scrnx, 161, 40+19, COL8_00FF00, "almost instantly.");
+			print_string(binfo->vram, binfo->scrnx, 161, 59+19, COL8_00FF00, "  Although I hadn't");
+			print_string(binfo->vram, binfo->scrnx, 161, 78+19, COL8_00FF00, "seen him in more th");
+			print_string(binfo->vram, binfo->scrnx, 161, 97+19, COL8_00FF00, "an ten years,  I kn");
+			print_string(binfo->vram, binfo->scrnx, 161, 116+19, COL8_00FF00,"ow I will miss him");
+			print_string(binfo->vram, binfo->scrnx, 161, 135+19, COL8_00FF00, "forever.");
+			print_string(binfo->vram, binfo->scrnx, 220, 160+19, COL8_00FF00, "AntzOs-10/16");
 		}else if(sizeof(command)>=1){
 				write_y += 19 ;
 				print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "Not Found");
@@ -227,10 +226,12 @@ void key(struct BOOTINFO *binfo,char s[40]){
 	if((strcmp(s,"1C")==0)){  // enter
 			if(x_move!=0){
 				// 右边
+				print_area(binfo->vram, binfo->scrnx ,COL8_000000,x_move + write_x,write_y,x_move+write_x+8, write_y+19);
 				write_x = 58 ;
 				write_y += 19 ;
 			}else {
 				// 左边
+				print_area(binfo->vram, binfo->scrnx ,COL8_000000,x_move + write_x,write_y,x_move+write_x+8, write_y+19);
 				action_command(binfo);
 				write_x = 58 ;
 				write_y += 19 ;
@@ -238,10 +239,13 @@ void key(struct BOOTINFO *binfo,char s[40]){
 					print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
 			}
 	}else if((strcmp(s,"01")==0)){
-		x_move = 0 ;
-		write_y = last_y ;
-		print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
-		write_x = 58 ;
+		if (x_move!=0){
+			print_area(binfo->vram, binfo->scrnx ,COL8_000000,x_move + write_x,write_y,x_move+write_x+8, write_y+19);
+			x_move = 0 ;
+			write_y = last_y ;
+			print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
+			write_x = 58 ;
+		}
 	}else if((strcmp(s,"0F")==0)){
 		// 关于tab 0F 8F
 		print_string(binfo->vram, binfo->scrnx, x_move+write_x, write_y, COL8_FFFFFF, " ");
@@ -261,10 +265,11 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
 	}else if(strcmp(s,"0E")==0){
 			// 回退
+			print_area(binfo->vram, binfo->scrnx ,COL8_000000,x_move + write_x,write_y,x_move+write_x+8, write_y+19);
 			int len = strlen(command);
 			command[len - 1] = '\0';
 			write_x -= 8 ;
-			print_area(binfo->vram, binfo->scrnx , COL8_000000,  x_move + write_x,     write_y,     x_move+write_x+19, write_y+19);
+			print_area(binfo->vram, binfo->scrnx , COL8_000000,  x_move + write_x,     write_y,     x_move+write_x+8, write_y+19);
 			if(x_move!=0){
    				// 正在右边界
 					if(write_x<=60) {
@@ -285,6 +290,7 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			if(strcmp(in,"")==0){
 
 			}else {
+				print_area(binfo->vram, binfo->scrnx, COL8_000000, x_move+write_x, write_y, x_move+write_x+8, write_y+19);
 				print_string(binfo->vram, binfo->scrnx,  x_move + write_x,  write_y, COL8_FFFFFF, in);
 				add_command(in);
 				write_x += 8 ;
@@ -324,6 +330,7 @@ void border(struct BOOTINFO *binfo){
 		}
 	}
 }
+
 void HariMain(void)
 {
 	struct BOOTINFO *binfo = (struct BOOTINFO *) ADR_BOOTINFO;
@@ -336,7 +343,8 @@ void HariMain(void)
 
 	fifo8_init(&keyfifo, 32, keybuf);
 	fifo8_init(&mousefifo, 128, mousebuf);
-	io_out8(PIC0_IMR, 0xf9); /* 开放PIC1和键盘中断(11111001) */
+	init_pit();
+	io_out8(PIC0_IMR, 0xf8); /* 开放PIC1和键盘中断(11111001) */
 	io_out8(PIC1_IMR, 0xef); /* 开放鼠标中断(11101111) */
 
 	init_keyboard();
@@ -349,11 +357,19 @@ void HariMain(void)
 	print_string(binfo->vram, binfo->scrnx,  107,  0, COL8_000000, "|-|o|x|");
 	print_string(binfo->vram, binfo->scrnx, 4, 19, COL8_FFFFFF, "AntzOS> SayHello()");
 	print_string(binfo->vram, binfo->scrnx, 4, 38, COL8_FFFFFF, "Hello My AntzOs.");
-	print_string(binfo->vram, binfo->scrnx, 4, 57, COL8_FFFFFF, "AntzOS>_");
+	print_string(binfo->vram, binfo->scrnx, 4, 57, COL8_FFFFFF, "AntzOS>");
 
 
-	enable_mouse();
 	for (;;) {
+		int t = timerctl.count/100 ;
+		sprintf(s, "time:%8ds", t);
+		print_area(binfo->vram, binfo->scrnx, COL8_000000,  162,     0,      315, 		16);
+		print_string(binfo->vram, binfo->scrnx, 162, 0, COL8_840000, s) ;
+		if (t%2==0){
+			print_string(binfo->vram, binfo->scrnx, x_move+write_x, write_y, COL8_FFFFFF, "|") ;
+		}else {
+			print_area(binfo->vram, binfo->scrnx, COL8_000000, x_move+write_x, write_y, x_move+write_x+8, write_y+19);
+		}
 		io_cli();
 		if (fifo8_status(&keyfifo) + fifo8_status(&mousefifo) == 0) {
 			io_stihlt();
@@ -363,16 +379,7 @@ void HariMain(void)
 				i = fifo8_get(&keyfifo);
 				io_sti();
 				sprintf(s, "%02X", i);
-				//boxfill8(binfo->vram, binfo->scrnx, COL8_008484,  0, 16, 15, 31);
-				//putfonts8_asc(binfo->vram, binfo->scrnx, 0, 16, COL8_FFFFFF, s);
-				// if (flag){
 					key(binfo,s);
-				// }
-				// if(flag==1){
-				// 	flag = 0 ;
-				// }else {
-				// 	flag = 1 ;
-				// }
 			} else if (fifo8_status(&mousefifo) != 0) {
 				i = fifo8_get(&mousefifo);
 				io_sti();
@@ -418,17 +425,5 @@ void init_keyboard(void)
 	io_out8(PORT_KEYCMD, KEYCMD_WRITE_MODE);
 	wait_KBC_sendready();
 	io_out8(PORT_KEYDAT, KBC_MODE);
-	return;
-}
-
-#define KEYCMD_SENDTO_MOUSE		0xd4
-#define MOUSECMD_ENABLE			0xf4
-
-void enable_mouse(void)
-{
-	wait_KBC_sendready();
-	io_out8(PORT_KEYCMD, KEYCMD_SENDTO_MOUSE);
-	wait_KBC_sendready();
-	io_out8(PORT_KEYDAT, MOUSECMD_ENABLE);
 	return;
 }
