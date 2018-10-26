@@ -21,6 +21,7 @@ int io_load_eflags(void);
 void io_store_eflags(int eflags);
 void load_gdtr(int limit, int addr);
 void load_idtr(int limit, int addr);
+void asm_inthandler20(void);
 void asm_inthandler21(void);
 void asm_inthandler27(void);
 void asm_inthandler2c(void);
@@ -104,3 +105,12 @@ void inthandler2c(int *esp);
 #define PIC1_ICW2		0x00a1
 #define PIC1_ICW3		0x00a1
 #define PIC1_ICW4		0x00a1
+
+
+/* timer.c */
+struct TIMERCTL {
+	unsigned int count ;
+};
+extern struct TIMERCTL timerctl;
+void init_pit(void);
+void inthandler20(int *esp);
