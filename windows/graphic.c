@@ -24,8 +24,6 @@ void init_palette(void)
 	};
 	set_palette(0, 15, table_rgb);
 	return;
-
-	/* C语言中的static char语句只能用于数据，相当于汇编中的DB指令 */
 }
 
 void set_palette(int start, int end, unsigned char *rgb)
@@ -111,7 +109,7 @@ void print_string(char *vram, int xsize, int x, int y, char c, unsigned char *s)
 	return;
 }
 
-void init_mouse_cursor8(char *mouse, char bc) 
+void init_mouse_cursor8(char *mouse, char bc)
 {
 	static char cursor[16][16] = {
 		"****************",
