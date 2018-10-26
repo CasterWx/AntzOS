@@ -1,5 +1,8 @@
 # 自制操作系统Antz
 > 我已经规范了系统代码风格，类似于按照linux分包，把各部分功能区分开了
+
+![antz_run](https://github.com/CasterWx/AntzOS/blob/master/screen/antz_gif.gif?raw=true)
+
 ### [Antz系统更新地址](https://www.cnblogs.com/LexMoon/category/1262287.html)
 
 ### [Linux内核源码分析地址](https://www.cnblogs.com/LexMoon/category/1267413.html)
@@ -55,7 +58,7 @@ void key(Binfo binfo,char s[40]){
 		border(binfo);
 	}else if((strcmp(s,"3B")==0)){  //关于F1的响应中断
 			sprintf(command,"%s","");
-			// flag = 0	
+			// flag = 0
 			x_move = 0 ;
 			new_pe(binfo);
 			printasc(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
