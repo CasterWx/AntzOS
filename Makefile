@@ -3,7 +3,7 @@ MAKE     = make.exe
 COPY     = copy
 DEL      = del
 TREE     = tree /f
-Antz_kernel = main/bootpack.obj asmfunc/naskfunc.obj assic/char.set windows/graphic.obj lgdt/set_lgdt.obj interrupt/int.obj io/fifo.obj thun/thun.obj
+Antz_kernel = main/bootpack.obj asmfunc/naskfunc.obj assic/char.set windows/graphic.obj lgdt/set_lgdt.obj interrupt/int.obj io/fifo.obj thun/thun.obj task/timer.obj
 
 default :
 	$(MAKE) img
@@ -73,6 +73,8 @@ clean :
 	-$(DEL) thun\thun.lst
 	-$(DEL) thun\thun.obj
 
+	-$(DEL) task\timer.lst
+	-$(DEL) task\timer.obj
 	-$(DEL) bootpack.map
 	-$(DEL) bootpack.bim
 	-$(DEL) bootpack.hrb
