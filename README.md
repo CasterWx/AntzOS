@@ -1,6 +1,7 @@
 # 自制操作系统Antz
 > 我已经规范了系统代码风格，类似于按照linux分包，把各部分功能区分开了
 
+![run](https://github.com/CasterWx/AntzOS/blob/master/screen/execute.gif?raw=true)
 ![antz_run](https://github.com/CasterWx/AntzOS/blob/master/screen/antz_gif.gif?raw=true)
 
 ### [Antz系统更新地址](https://www.cnblogs.com/LexMoon/category/1262287.html)
