@@ -1,6 +1,8 @@
 ## 锁
 
-sync.h
+#### 信号量与锁的实现思想
+
+> sync.h
 ```c
     // 信号量
     struct semaphore {
@@ -11,11 +13,11 @@ sync.h
     struct lock {
         struct task_struct* holder ; // 锁持有者
         struct semaphore semaphore ;
-        uint holder_num ; 
+        uint holder_num ;
     }
 ```
 
-sync.c
+> sync.c
 ```c
     void sema_init(struct semaphore *sema,uint value){
         sema->value = value ;
@@ -38,7 +40,7 @@ sync.c
             append_list(&psame->waiters,&running_thread()->general_tag);
             thread_block(TASK_BLOCKED); //阻塞自己
          }
-         psame->value -- ; 
+         psame->value -- ;
          ASSERT(psame->value==0);
          // 回复之前的中断状态
     }
