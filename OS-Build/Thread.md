@@ -6,7 +6,7 @@
 
 > 定义
 
-```
+```c
 typedef void thread_fun(void*);
 
 enum task_status{
@@ -79,7 +79,7 @@ struct task_struct{
 
 > 实现
 
-```
+```c
 static void kernel_thread(thread_func* function,void* func_arg){
   function(func_arg);
 }
@@ -113,4 +113,18 @@ struct task_struct* thread_start(char *name,int prio,thread_func function,void *
   return thread ;
 }
 
+void k_thread_a(void* arg){
+  char *ar = arg ;
+  while(1){
+    put_str(ar);
+  }
+}
+
+int main(){
+  put_str("i am kernel\n") ;
+  init_all();
+
+  thread_start("thread_a",31,k_thread_a,"arg");
+  return 0;
+}
 ```
