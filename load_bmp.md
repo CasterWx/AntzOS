@@ -248,7 +248,7 @@ bool saveBmp(char *bmpName, unsigned char *imgBuf, int width, int height, int bi
 	infohead.biPlanes = 1;
 	infohead.biSize = 40;
 	infohead.biSizeImage = lineByte*height;
-	infohead.biWidth = width;
+	infohead.biWidth = width ;
 	infohead.biXPelsPerMeter = 0;
 	infohead.biYPelsPerMeter = 0;
  
