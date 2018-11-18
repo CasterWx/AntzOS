@@ -6,8 +6,8 @@
 ```c
     // 信号量
     struct semaphore {
-        uint value ;
-        struct list waiters ;
+        uint value ;   // d
+        struct list waiters ; // 进程P()
     }
     // 锁
     struct lock {
@@ -28,8 +28,11 @@
         plock->holder_num = 0 ;
         sema_init(&plock->semaphore,1);
     }
+    // P
     void sema_down(struct semaphore *psema){
          // 关中断操作
+         OCW1 - eflags --- IF - 0  -
+         // context
          while(psema->value==0){
             // 如果当前线程已经在waiters队列中
             ASSERT(!elem_find(&psema->waiters,running_thread()->general_tag));
@@ -43,7 +46,9 @@
          psame->value -- ;
          ASSERT(psame->value==0);
          // 回复之前的中断状态
+         // OCW1 -
     }
+    // V
     void sema_up(struct semaphore *psema){
          // 关中断操作
          ASSERT(psema->value==0);
@@ -63,7 +68,7 @@
             plock->holder_num = 1 ;
         }else{
             plock->holder_num++ ;
-        }    
+        }
     }
     void lock_release(struct lock* plock){
         // 锁的拥有者
@@ -75,7 +80,8 @@
         ASSERT(plock->holder_num==1);
         plock->holder = NULL ;
         plock->holder_num = 0 ;
-        sema_up(&plock->sema) ;
+        sema_up(&plock->sema) ; //V
+        // OCW-> eflags -> IF
         // 先释放锁再进行信号量增加
     }
 ```
