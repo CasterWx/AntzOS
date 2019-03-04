@@ -4,7 +4,7 @@
 
 #### 显卡的直接操作
 
-![run](https://github.com/CasterWx/AntzOS/blob/master/screen/a.gif?raw=true)
+![run](https://github.com/CasterWx/AntzOS/blob/master/screen/虚拟机1.gif?raw=true)
 
 #### 进程与时钟
 
@@ -12,7 +12,7 @@
 
 #### vim
 
-![antz_run](https://github.com/CasterWx/AntzOS/blob/master/screen/antz_gif.gif?raw=true)
+![antz_run](https://github.com/CasterWx/AntzOS/blob/master/screen/虚拟机2.gif?raw=true)
 
 #### [Antz系统更新地址](https://www.cnblogs.com/LexMoon/category/1262287.html)
 
