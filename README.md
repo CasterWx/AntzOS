@@ -41,56 +41,6 @@
 
 目前的项目目录，请忽略掉md文件，这个镜像文件可以直接使用工具写入u盘启动，或者在虚拟机打开。thun.c新增的，目的是为了抽离其他c文件中的工具化函数，不然以后只是一个源码文件都会让人头疼。
 
-```
-▒▒  antz.img
-▒▒  Makefile
-▒▒  README.md
-▒▒
-▒▒▒▒asmfunc
-▒▒      naskfunc.nas
-▒▒
-▒▒▒▒assic
-▒▒      char.set
-▒▒
-▒▒▒▒boot
-▒▒      asmhead.asm
-▒▒      mbr.asm
-▒▒
-▒▒▒▒include
-▒▒      errno.h
-▒▒      float.h
-▒▒      limits.h
-▒▒      math.h
-▒▒      stdio.h
-▒▒      string.h
-▒▒      todo.h
-▒▒
-▒▒▒▒interrupt
-▒▒      int.c
-▒▒
-▒▒▒▒io
-▒▒      fifo.c
-▒▒
-▒▒▒▒lgdt
-▒▒      set_lgdt.c
-▒▒
-▒▒▒▒log
-▒▒      build.log
-▒▒      delete.log
-▒▒
-▒▒▒▒main
-▒▒      bootpack.c
-▒▒      README..md
-▒▒      shell_1.md
-▒▒      shell_2.md
-▒▒
-▒▒▒▒thun
-▒▒      thun.c
-▒▒
-▒▒▒▒windows
-        graphic.c
-
-```
 
 [AntzOs](https://github.com/CasterWx/AntzOS)需要更多优秀的开发者来实现，无论你是正在学习操作系统课程还是其他方面，我相信AntzOs都可以帮助你更加的深入了解计算机操作系统底层的实现。
 
@@ -100,4 +50,9 @@
 | ------------ | ------------ |
 | <img width="250" src="https://www.cnblogs.com/images/cnblogs_com/LexMoon/1246510/o_pay.png"/> |<img width="250" src="https://www.cnblogs.com/images/cnblogs_com/LexMoon/1246510/o_wx.png"/> |
 
-所有项目都是完全开源的，使用完全免费。 但是随着项目规模的增长，也需要有相应的资金支持才能持续项目的维护与开发。你可以通过下列的方法来赞助开发。你的名字会出现在我的GitHub 仓库和博客文档中。
+| 鸣谢列表 | 备注 |
+| ------- | -------- |
+| [@小橙子](https://weibo.com/u/2068007951) | 赞助￥1 |
+| @Yyh | 赞助书籍《Linux内核源码刨析》,《深入理解Linux内核》等四本实体书 |
+
+所有项目都是完全开源的，使用完全免费。 但是如果您对此项目有兴趣，可以通过赞助的方式来支持。您可以通过扫码的方法来赞助开发。您的名字会出现在我的GitHub仓库和博客文档中。
