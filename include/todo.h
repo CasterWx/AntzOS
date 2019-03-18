@@ -4,6 +4,9 @@ char* replace_char(char s[40]);
 /* thun.c */
 void to_printf_dijkstra();
 void to_printf_pdd();
+void to_show();
+/* beaginShow.c */
+
 /* asmhead.nas */
 struct BOOTINFO { /* 0x0ff0-0x0fff */
 	char cyls; /* 启动区读磁盘读到此为止 */

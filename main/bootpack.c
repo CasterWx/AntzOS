@@ -208,6 +208,10 @@ void HariMain(void)
 	init_keyboard();
 
 	init_palette();
+
+	to_show();
+
+	print_area(binfo->vram, binfo->scrnx , COL8_FFFFFF , 0 , 0 , binfo->scrnx, binfo->scrny);
 	init_screen8(binfo->vram, binfo->scrnx, binfo->scrny);
 
 	print_string(binfo->vram, binfo->scrnx,  0,  0, COL8_FFFFFF, "Terminal-Antz");
@@ -217,8 +221,7 @@ void HariMain(void)
 	print_string(binfo->vram, binfo->scrnx, 4, 19, COL8_FFFFFF, "AntzOS> SayHello()");
 	print_string(binfo->vram, binfo->scrnx, 4, 38, COL8_FFFFFF, "Hello My AntzOs.");
 	print_string(binfo->vram, binfo->scrnx, 4, 57, COL8_FFFFFF, "AntzOS>");
-
-
+ // 1024x768
 	for (;;) {
 		int t = timerctl.count/100 ;
 		sprintf(s, "runtime:%8ds", t);

@@ -1,9 +1,19 @@
+![screen](screen/11.jpg)
+
 # AntzOs
 
 > 一个从零开始的自制操作系统
 
 开发文档及记录。
 [https://www.cnblogs.com/LexMoon/category/1262287.html](https://www.cnblogs.com/LexMoon/category/1262287.html)
+
+#### 制作启动动画
+
+![run](screen/my.gif)
+
+#### 真机运行
+
+![run](screen/runShow.gif)
 
 #### 显卡的直接操作
 
