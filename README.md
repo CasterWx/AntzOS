@@ -9,6 +9,8 @@
 
 #### 制作启动动画
 
+图片来源 : [phodal/daily](https://github.com/phodal/daily)
+
 ![run](screen/my.gif)
 
 #### 真机运行
