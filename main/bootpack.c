@@ -201,15 +201,21 @@ void HariMain(void)
 
 	fifo8_init(&keyfifo, 32, keybuf);
 	fifo8_init(&mousefifo, 128, mousebuf);
+
+
 	init_pit();
+
 	io_out8(PIC0_IMR, 0xf8); /* 开放PIC1和键盘中断(11111001) */
 	io_out8(PIC1_IMR, 0xef); /* 开放鼠标中断(11101111) */
 
 	init_keyboard();
 
 	init_palette();
+	
+	int j ;
+	for (j=0;j<1000;j++)
+		to_show();
 
-	to_show();
 
 	print_area(binfo->vram, binfo->scrnx , COL8_FFFFFF , 0 , 0 , binfo->scrnx, binfo->scrny);
 	init_screen8(binfo->vram, binfo->scrnx, binfo->scrny);

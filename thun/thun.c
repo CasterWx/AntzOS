@@ -29,7 +29,6 @@ void to_show(){
   struct BOOTINFO *binfo = (struct BOOTINFO *) ADR_BOOTINFO;
   int i, x, y ;
   int k ; // 1024x768
-  for (i=0;i<2000;i++){
     k = 0  ;
     for (y = 0; y < 60; y++) { //10800
       for (x = 0; x < 108; x++){
@@ -38,7 +37,7 @@ void to_show(){
         k++;
       }
     }
-  }
+
 }
 
 
