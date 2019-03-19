@@ -9,7 +9,7 @@ void new_pe(struct BOOTINFO *binfo);
 
 int write_x = 60 ;
 int write_y = 57 ;
-
+char vim_input[1000] = "" ;
 // int flag = 1 ;
 int x_move = 0 ;
 // 指令缓存，但是因为中断响应的时间问题，终端输入速度要非常慢
@@ -40,14 +40,23 @@ void action_command(struct BOOTINFO *binfo){
 			print_string(binfo->vram, binfo->scrnx,  0,  0, COL8_000000, "Terminal-Antz");
 			print_string(binfo->vram, binfo->scrnx,  107,  0, COL8_000000, "|-|o|x|");
 		}else if(strcmp(command,"vim")==0){
-			// vim edit
-			// 重置右半边屏幕
+			/*
+			* @author : CasterWx
+			* @time : 2019/3/19/16:32
+			* @content : 经过思考之后，决定将vim_input中缓存数据存储为16进制格式，方便于vimShow命令执行时可以拥有好的显示效果。
+			*/
+			// vim edit 
+			// vim启动时刷新右半区域显存
 			print_area(binfo->vram, binfo->scrnx , COL8_000000,   binfo->scrnx/2 + 3, 0, binfo->scrnx-3,  binfo->scrnx-3);
+			// 初始化vim输入指针
 			print_string(binfo->vram,binfo->scrnx,162,2,COL8_00FF00,"Vim :");
 			x_move = binfo->scrnx/2 - 52  ;
 			last_y = write_y + 19 ;
 			write_x = 60 ;
 			write_y = 2 ;
+
+			// 清空过去的vim输入缓存 
+			sprintf(vim_input,"%s","") ; 
 		}else if(strcmp(command,"dijkstra")==0){
 			to_printf_dijkstra();
 		}else if(strcmp(command,"pdd")==0){
@@ -70,9 +79,12 @@ void action_command(struct BOOTINFO *binfo){
 			print_string(binfo->vram, binfo->scrnx, binfo->scrnx/2+5, 40+19, COL8_00FF00, "him in more than ten years,  I know I");
 			print_string(binfo->vram, binfo->scrnx, binfo->scrnx/2+5, 59+19, COL8_00FF00, "will miss him forever.");
 			print_string(binfo->vram, binfo->scrnx, binfo->scrnx/2+5, 78+19, COL8_00FF00, "   AntzOs-10/16");
+		}else if(strcmp(command,"vimshow"==0)){
+			// 显示vim_input中内容
+
 		}else if(sizeof(command)>=1){
-				write_y += 19 ;
-				print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "Not Found");
+			write_y += 19 ;
+			print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "Not Found");
 		}
 		// 命令缓存清除
 		sprintf(command,"%s","");
@@ -130,20 +142,23 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			print_area(binfo->vram, binfo->scrnx , COL8_000000,  x_move + write_x,     write_y,     x_move+write_x+8, write_y+19);
 			if(x_move!=0){
    				// 正在右边界
-					if((x_move+write_x)<=binfo->scrnx/2) {
-						write_x = binfo->scrnx - 8;
-						write_y -= 19 ;
-					}
+				if((x_move+write_x)<=binfo->scrnx/2) {
+					write_x = binfo->scrnx - 8;
+					write_y -= 19 ;
+				}
+				// vim内容记录
+				sprintf(vim_input,"%s%s",vim_input,s) ;
 			}else if(x_move==0){
-					// 正在左边界
-					if(write_x<=9) {
-						write_x = binfo->scrnx/2-12 ;
-						write_y -= 19 ;
-					}
+				// 正在左边界
+				if(write_x<=9) {
+					write_x = binfo->scrnx/2-12 ;
+					write_y -= 19 ;
+				}
 			}
 
 	}else {
 			//putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, s);
+			// 非功能键则为输出键
 			char *in = replace_char(s) ;
 			if(strcmp(in,"")==0){
 
