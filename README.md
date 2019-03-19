@@ -25,7 +25,7 @@
 | ![run](screen/my.gif) | ![run](screen/runShow.gif) |
 
 | 图片来源 : [phodal/daily](https://github.com/phodal/daily) |
-| ------- | -------- |
+| ------- |
 
 | 显卡的直接操作 | 进程与时钟 |
 | ------- | -------- |
