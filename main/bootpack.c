@@ -21,8 +21,8 @@ void add_command(char *s)  {
 
 // vim输入的数据，根据回车来分隔
 struct vim_input{
-	char *vim_char = "" ;
-	int len = 0;
+	char vim_char[200] ;
+	int len ;
 	struct vim_input * next ;
 } ;
 
@@ -91,11 +91,18 @@ void action_command(struct BOOTINFO *binfo){
 			print_string(binfo->vram, binfo->scrnx, binfo->scrnx/2+5, 40+19, COL8_00FF00, "him in more than ten years,  I know I");
 			print_string(binfo->vram, binfo->scrnx, binfo->scrnx/2+5, 59+19, COL8_00FF00, "will miss him forever.");
 			print_string(binfo->vram, binfo->scrnx, binfo->scrnx/2+5, 78+19, COL8_00FF00, "   AntzOs-10/16");
-		}else if(strcmp(command,"vimshow"==0)){
+		}else if(strcmp(command,"vimshow")==0){
 			// 显示vim_input中内容
+			char myline[] = "line is ";
+			
+			sprintf(myline,"%s%4d",myline,vim_index);
+			print_string(binfo->vram, binfo->scrnx, binfo->scrnx/2, binfo->scrnx/2+19, COL8_FFFFFF, myline); //21
+			
+			print_string(binfo->vram, binfo->scrnx, binfo->scrnx/2+5, 5, COL8_FFFFFF,  "Old Vim Log:"); //21
+			
 			int index_my_vim = 0 ;
-			for (index_my_vim=0;index_my_vim<vim_index;i++){
-				print_string(binfo->vram, binfo->scrnx, binfo->scrnx/2+5, 2+index_my_vim*19, COL8_00FF00,  mlist[index_my_vim].vim_char); //21
+			for (index_my_vim=0;index_my_vim<vim_index;index_my_vim++){
+				print_string(binfo->vram, binfo->scrnx, binfo->scrnx/2+5, 31+index_my_vim*19, COL8_FFFFFF,  mlist[index_my_vim].vim_char); //21
 			}
 		}else if(sizeof(command)>=1){
 			write_y += 19 ;
@@ -121,6 +128,7 @@ void key(struct BOOTINFO *binfo,char s[40]){
 				if (x_move==0)
 					print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
 			}
+			vim_index ++ ;
 	}else if((strcmp(s,"01")==0)){
 		if (x_move!=0){
 			print_area(binfo->vram, binfo->scrnx ,COL8_000000,x_move + write_x,write_y,x_move+write_x+8, write_y+19);
@@ -161,15 +169,7 @@ void key(struct BOOTINFO *binfo,char s[40]){
 					write_x = binfo->scrnx - 8;
 					write_y -= 19 ;
 				}
-				// vim内容记录
-				if(strcmp(s,"9C")!=0){ 
-					char *in = replace_char(s) ; // 从中断号转变为字符
-					sprintf(mlist[vim_index].vim_char,"%s%s",mlist[vim_index].vim_char,in) ; // 添加进去，但是为了在输出时不超过边界，选择
-					mlist[vim_index].len ++ ;
-				}else { // 是回车 ,换下一个
-					mlist[vim_index].next = &mlist[vim_index+1];
-					vim_index ++ ;
-				}
+				
 			}else if(x_move==0){
 				// 正在左边界
 				if(write_x<=9) {
@@ -187,6 +187,12 @@ void key(struct BOOTINFO *binfo,char s[40]){
 			}else {
 				print_area(binfo->vram, binfo->scrnx, COL8_000000, x_move+write_x, write_y, x_move+write_x+8, write_y+19);
 				print_string(binfo->vram, binfo->scrnx,  x_move + write_x,  write_y, COL8_FFFFFF, in);
+
+				// vim内容记录
+				if(x_move!=0){ 	
+					sprintf(mlist[vim_index].vim_char,"%s%s",mlist[vim_index].vim_char,in) ; // 添加进去，但是为了在输出时不超过边界，选择
+				}
+
 				add_command(in);
 				write_x += 8 ;
 			}

@@ -146,7 +146,8 @@ char* replace_char(char s[40]){
 	*@content : 此处本来是将回车的chr设置为空的，但是为了方便vimShow排版，此处将回车的chr设置为"\n"。
 	**/
 		// old Code  : chr = "" ;
-		chr = "\n";
+		chr = "";
+		//  fix :显示bug
 	}else if(strcmp(s,"BB")==0){
 		chr = "" ;
 	}
