@@ -79,16 +79,3 @@ The goal is to build a very simple UNIX-based operating system in c, not just a 
 #### <span id="jlq">交流群</span>
 
 Telegram : [https://t.me/joinchat/LjClOxDMf0vJ2E7uGGOtCQ](https://t.me/joinchat/LjClOxDMf0vJ2E7uGGOtCQ)
-
-#### 赞助
-
-| 支付宝 | 微信 |
-| ------------ | ------------ |
-| <img width="250" src="https://www.cnblogs.com/images/cnblogs_com/LexMoon/1246510/o_pay.png"/> |<img width="250" src="https://www.cnblogs.com/images/cnblogs_com/LexMoon/1246510/o_wx.png"/> |
-
-| 鸣谢列表 | 备注 |
-| ------- | -------- |
-| [@小橙子](https://weibo.com/u/2068007951) | 赞助￥1 |
-| @Yyh | 赞助书籍《Linux内核源码刨析》,《深入理解Linux内核》等四本实体书 |
-
-我的所有项目都是完全开源的，可以随意修改。如果该项目对您起到了帮助或者您对其很有兴趣，可以通过赞助的方式来支持我，您可以通过扫码的方法来赞助开发。
