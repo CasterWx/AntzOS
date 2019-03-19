@@ -9,7 +9,6 @@ void new_pe(struct BOOTINFO *binfo);
 
 int write_x = 60 ;
 int write_y = 57 ;
-char vim_input[1000] = "" ;
 // int flag = 1 ;
 int x_move = 0 ;
 // 指令缓存，但是因为中断响应的时间问题，终端输入速度要非常慢
@@ -19,6 +18,19 @@ void add_command(char *s)  {
 		sprintf(command,"%s%s",command,s);
 		command_index++ ;
 }
+
+// vim输入的数据，根据回车来分隔
+struct vim_input{
+	char *vim_char = "" ;
+	int len = 0;
+	struct vim_input * next ;
+} ;
+
+// 初始40行缓存
+struct vim_input mlist[40] ;
+int vim_index = 0 ;
+
+
 // vim之前保存x，y
 int last_x = 0 ;
 int last_y = 0 ;
@@ -43,7 +55,7 @@ void action_command(struct BOOTINFO *binfo){
 			/*
 			* @author : CasterWx
 			* @time : 2019/3/19/16:32
-			* @content : 经过思考之后，决定将vim_input中缓存数据存储为16进制格式，方便于vimShow命令执行时可以拥有好的显示效果。
+			* @content : 经过思考之后，决定将vim_input结构体来存储输入数据，在回车后接下来的数据存储到下一个节点。
 			*/
 			// vim edit 
 			// vim启动时刷新右半区域显存
@@ -55,8 +67,8 @@ void action_command(struct BOOTINFO *binfo){
 			write_x = 60 ;
 			write_y = 2 ;
 
-			// 清空过去的vim输入缓存 
-			sprintf(vim_input,"%s","") ; 
+			// 清空过去的vim输入缓存  清空vim_input
+			vim_index = 0 ;
 		}else if(strcmp(command,"dijkstra")==0){
 			to_printf_dijkstra();
 		}else if(strcmp(command,"pdd")==0){
@@ -81,7 +93,10 @@ void action_command(struct BOOTINFO *binfo){
 			print_string(binfo->vram, binfo->scrnx, binfo->scrnx/2+5, 78+19, COL8_00FF00, "   AntzOs-10/16");
 		}else if(strcmp(command,"vimshow"==0)){
 			// 显示vim_input中内容
-
+			int index_my_vim = 0 ;
+			for (index_my_vim=0;index_my_vim<vim_index;i++){
+				print_string(binfo->vram, binfo->scrnx, binfo->scrnx/2+5, 2+index_my_vim*19, COL8_00FF00,  mlist[index_my_vim].vim_char); //21
+			}
 		}else if(sizeof(command)>=1){
 			write_y += 19 ;
 			print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "Not Found");
@@ -147,7 +162,14 @@ void key(struct BOOTINFO *binfo,char s[40]){
 					write_y -= 19 ;
 				}
 				// vim内容记录
-				sprintf(vim_input,"%s%s",vim_input,s) ;
+				if(strcmp(s,"9C")!=0){ 
+					char *in = replace_char(s) ; // 从中断号转变为字符
+					sprintf(mlist[vim_index].vim_char,"%s%s",mlist[vim_index].vim_char,in) ; // 添加进去，但是为了在输出时不超过边界，选择
+					mlist[vim_index].len ++ ;
+				}else { // 是回车 ,换下一个
+					mlist[vim_index].next = &mlist[vim_index+1];
+					vim_index ++ ;
+				}
 			}else if(x_move==0){
 				// 正在左边界
 				if(write_x<=9) {
