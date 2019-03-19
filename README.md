@@ -7,39 +7,45 @@
 开发文档及记录。
 [https://www.cnblogs.com/LexMoon/category/1262287.html](https://www.cnblogs.com/LexMoon/category/1262287.html)
 
-#### 制作启动动画
+#### <span id="rhsy">如何使用</span>
 
-图片来源 : [phodal/daily](https://github.com/phodal/daily)
+1. 下载仓库内tools包中的`USB Image Tool`启动盘制作工具与`antz.img`镜像文件。
+2. 准备一个空闲的U盘。
+3. 按照下述图示。
 
-![run](screen/my.gif)
+| 1 | 2 | 3 |
+| ------- | -------- | -------- |
+| ![run](screen/h1.png) | ![run](screen/h2.png) | ![run](screen/h3.png) |
 
-#### 真机运行
 
-![run](screen/runShow.gif)
+#### <span id="xgys">效果演示</span>
 
-#### 显卡的直接操作
+| 制作启动动画 | 真机运行 |
+| ------- | -------- |
+| ![run](screen/my.gif) | ![run](screen/runShow.gif) |
 
-![run](https://github.com/CasterWx/AntzOS/blob/master/screen/虚拟机1.gif?raw=true)
+| 图片来源 : [phodal/daily](https://github.com/phodal/daily) |
+| ------- | -------- |
 
-#### 进程与时钟
+| 显卡的直接操作 | 进程与时钟 |
+| ------- | -------- |
+| ![run](https://github.com/CasterWx/AntzOS/blob/master/screen/虚拟机1.gif?raw=true) | ![run](https://github.com/CasterWx/AntzOS/blob/master/screen/execute.gif?raw=true) |
 
-![run](https://github.com/CasterWx/AntzOS/blob/master/screen/execute.gif?raw=true)
 
-#### vim
+| vim |
+| ------- |
+| ![antz_run](https://github.com/CasterWx/AntzOS/blob/master/screen/虚拟机2.gif?raw=true) |
 
-![antz_run](https://github.com/CasterWx/AntzOS/blob/master/screen/虚拟机2.gif?raw=true)
 
-#### [Antz系统更新地址](https://www.cnblogs.com/LexMoon/category/1262287.html)
+#### <span id="jlq">交流群</span>
 
-#### [Github项目地址](https://github.com/CasterWx/AntzOS)
+Telegram : [https://t.me/joinchat/LjClOxDMf0vJ2E7uGGOtCQ](https://t.me/joinchat/LjClOxDMf0vJ2E7uGGOtCQ)
 
-#### 早期真机运行情况 ：
-
-![os1](https://www.cnblogs.com/images/cnblogs_com/LexMoon/1246510/o_qq_pic_merged_1539834568688.jpg)
-
-![os2](https://www.cnblogs.com/images/cnblogs_com/LexMoon/1246510/o_antzos4.jpg)
-
-![os3](https://www.cnblogs.com/images/cnblogs_com/LexMoon/1246510/o_qq_pic_merged_1539834611072.jpg)
+| 早期真机运行情况 |
+| ------- |
+| ![os1](https://www.cnblogs.com/images/cnblogs_com/LexMoon/1246510/o_qq_pic_merged_1539834568688.jpg) |
+| ![os2](https://www.cnblogs.com/images/cnblogs_com/LexMoon/1246510/o_antzos4.jpg) |
+| ![os3](https://www.cnblogs.com/images/cnblogs_com/LexMoon/1246510/o_qq_pic_merged_1539834611072.jpg) |
 
 这个系统在我最初的目的中就是实现一个半图形半终端的轻巧OS。
 
