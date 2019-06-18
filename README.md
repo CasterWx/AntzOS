@@ -1,4 +1,4 @@
-![screen](screen/11.jpg)
+﻿![screen](screen/11.jpg)
 
 # AntzOS
 
@@ -6,7 +6,7 @@
 
 The goal is to build a very simple UNIX-based operating system in c, not just a "proof-of-concept". The OS should be able to boot, start a userland shell, and be extensible.
 
-做了一个简单的小视频上传在了B站 [av55902129](https://www.bilibili.com/video/av55902129)
+做了一个简单的小视频上传在了B站 [av55902129](https://www.bilibili.com/video/av55902129)  (求投币点赞收藏)
 
 #### <span id="rhsy">开发文档</span>
 
