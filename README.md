@@ -6,6 +6,10 @@
 
 The goal is to build a very simple UNIX-based operating system in c, not just a "proof-of-concept". The OS should be able to boot, start a userland shell, and be extensible.
 
+###### 欢迎关注我的公众号哦~
+
+![weix](https://www.cnblogs.com/images/cnblogs_com/LexMoon/1391533/o_qrcode_for_gh_f3457f4f73a1_258.jpg)
+
 做了一个简单的小视频上传在了B站 [av55902129](https://www.bilibili.com/video/av55902129)  (求投币点赞收藏)
 
 #### <span id="rhsy">开发文档</span>
