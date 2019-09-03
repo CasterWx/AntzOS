@@ -84,4 +84,4 @@ The goal is to build a very simple UNIX-based operating system in c, not just a 
 
 #### <span id="jlq">交流群</span>
 
-Telegram : [https://t.me/joinchat/LjClOxDMf0vJ2E7uGGOtCQ](https://t.me/joinchat/LjClOxDMf0vJ2E7uGGOtCQ)
+Telegram : [https://t.me/antzuhl/](https://t.me/antzuhl/)
