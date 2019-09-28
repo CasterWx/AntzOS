@@ -76,7 +76,7 @@ The goal is to build a very simple UNIX-based operating system in c, not just a 
 
 最近同时也在读Linux内核源码。发现其中的注释也是很有意思，甚至Linus自己写的，他也不知道这部分为什么这样写，不断尝试之后发现可以实现，他就这样用了。
 
-目前的项目目录，请忽略掉md文件，这个镜像文件可以直接使用工具写入u盘启动，或者在虚拟机打开。
+这个镜像文件可以直接使用工具写入u盘启动，或者在虚拟机打开。
 
 [AntzOs](https://github.com/CasterWx/AntzOS)需要更多优秀的开发者来实现，无论你是正在学习操作系统课程还是其他方面，我相信AntzOs都可以帮助你更加的深入了解计算机操作系统底层的实现。
 
