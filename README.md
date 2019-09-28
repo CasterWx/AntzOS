@@ -1,5 +1,7 @@
 ﻿![screen](screen/11.jpg)
 
+系统封面授权取自于[phodal](https://github.com/phodal/daily)。
+
 # AntzOS
 
 > 一个随心所欲制造的操作系统Antz。
